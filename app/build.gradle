@@ -18,6 +18,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    hilt {
+        enableExperimentalClasspathAggregation = true
+    }
 
     buildTypes {
         release {

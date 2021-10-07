@@ -1,5 +1,10 @@
 package ar.com.example.alkemymovieapp.data.models
 
+import java.lang.Exception
+import okhttp3.ResponseBody
+import java.io.IOException
+
+
 data class Movie(
     val id: Int = -1,
     val adult:Boolean = false,

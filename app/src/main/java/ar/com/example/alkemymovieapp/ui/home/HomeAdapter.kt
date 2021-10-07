@@ -1,6 +1,7 @@
 package ar.com.example.alkemymovieapp.ui.home
 
 import android.content.Context
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class HomeAdapter(
                 itemClickListener.onMovieClick(movie)
             }
             setGlide(context,"https://image.tmdb.org/t/p/w500/${movie.poster_path}", binding.imgMovie )
+            binding.tvMovieTitle.text = movie.title
         }
     }
 

@@ -1,21 +1,21 @@
 package ar.com.example.alkemymovieapp.ui.details
 
-import android.accounts.NetworkErrorException
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import ar.com.example.alkemymovieapp.R
-import ar.com.example.alkemymovieapp.application.hide
-import ar.com.example.alkemymovieapp.application.setGlide
-import ar.com.example.alkemymovieapp.application.show
-import ar.com.example.alkemymovieapp.application.toast
+import ar.com.example.alkemymovieapp.application.*
 import ar.com.example.alkemymovieapp.core.*
 import ar.com.example.alkemymovieapp.data.models.MovieDetail
 import ar.com.example.alkemymovieapp.databinding.FragmentDetailBinding
 import ar.com.example.alkemymovieapp.presentation.remote.MovieViewModel
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,32 +37,38 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         viewModel.fetchMovieDetails(movieId).observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Loading -> {
-                    binding.progressBar.show()
+                    binding.progressBar.isVisible = true
                 }
                 is Resource.Success -> {
-                    binding.progressBar.hide()
+                    binding.progressBar.isVisible = false
                     drawDetails(it.data)
                 }
                 is Resource.Failure -> {
-                    toast(requireContext(), "Error: ${it.throwable.message}")
+                    handleApiError(it)
                 }
             }
         })
     }
 
     private fun drawDetails(data: MovieDetail) {
-        setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.backdrop_path}", binding.imgBackground)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            binding.verticalGuideline1.setGuidelinePercent(0.35F)
+            binding.horizontalGuideline3.setGuidelinePercent(0.68F)
+            setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.backdrop_path}", binding.imgBackground)
+        }
+
+        setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.backdrop_path}", binding.imgBackground,true)
         setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.poster_path}", binding.imgMovie)
         val genresToText = mutableListOf<String>()
         data.genres.forEach { genresToText.add(it.name) }
         with(binding) {
             tvGenre.text = genresToText.toString().removeSuffix("]").removePrefix("[")
             tvTitle.text = data.title
-            tvCalendar.text = "Release date:${data.release_date}"
-            tvLanguage.text = "Lang: ${data.original_language}"
+            tvCalendar.text = getString(R.string.release_date, data.release_date)
+            tvLanguage.text = getString(R.string.movie_language, data.original_language)
+            tvReviews.text = getString(R.string.reviews, data.vote_average.toString(), data.vote_count)
+            tvPopularity.text = getString(R.string.movie_popularity, data.popularity.toString())
             tvDescriptionDetails.text = data.overview
-            tvReviews.text = "Score: ${data.vote_average} (${data.vote_count} reviews)"
-            tvPopularity.text = "Views: ${data.popularity}"
         }
     }
 }

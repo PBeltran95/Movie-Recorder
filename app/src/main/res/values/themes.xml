@@ -13,4 +13,48 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="textInBackground">
+        <item name="autoSizeTextType"> uniform</item>
+        <item name="autoSizeMaxTextSize">25sp</item>
+        <item name="autoSizeMinTextSize">16sp</item>
+        <item name="autoSizeStepGranularity">2sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="drawableTint">@color/white</item>
+    </style>
+    <style name="textDescriptionAndGenre">
+        <item name="autoSizeTextType"> uniform</item>
+        <item name="autoSizeMaxTextSize">25sp</item>
+        <item name="autoSizeMinTextSize">18sp</item>
+        <item name="autoSizeStepGranularity">2sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="maxLines">7</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="textTitles" parent="@style/TextAppearance.MaterialComponents.Headline6">
+        <item name="autoSizeTextType"> uniform</item>
+        <item name="autoSizeMaxTextSize">35sp</item>
+        <item name="autoSizeMinTextSize">18sp</item>
+        <item name="autoSizeStepGranularity">2sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="maxLines">7</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="textItemTitle" parent="@style/TextAppearance.MaterialComponents.Headline6">
+        <item name="autoSizeTextType"> uniform</item>
+        <item name="autoSizeMaxTextSize">25sp</item>
+        <item name="autoSizeMinTextSize">15sp</item>
+        <item name="autoSizeStepGranularity">2sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:baselineAligned">false</item>
+    </style>
+
+
+
+
 </resources>

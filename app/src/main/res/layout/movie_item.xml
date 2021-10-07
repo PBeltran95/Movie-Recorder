@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="150dp"
-    android:maxHeight="500dp"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/common_padding_margin"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -19,51 +19,62 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_percent="0.04" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.96" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.99"/>
+        app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.87" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="true"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintWidth_min="100dp"
-        app:layout_constraintHeight_min="150dp"
-        app:layout_constraintWidth_max="200dp"
-        app:layout_constraintHeight_max="250dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        app:cardCornerRadius="@dimen/common_min_padding_margin"
+        android:background="?attr/selectableItemBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="@id/guideline4">
 
         <ImageView
             android:id="@+id/imgMovie"
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"/>
 
     </com.google.android.material.card.MaterialCardView>
 
-
-
-
-
-
-
+    <TextView
+        android:id="@+id/tv_movie_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        style="@style/textItemTitle"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/card_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        tools:text="Free Guy"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

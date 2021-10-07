@@ -7,11 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.details.DetailFragment">
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
 
         <RelativeLayout
             android:id="@+id/progressBar"
@@ -35,6 +34,7 @@
         android:id="@+id/imgBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,10 +53,10 @@
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/common_padding_margin"
         android:clipToPadding="true"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="16dp"
+        app:cardCornerRadius="@dimen/common_min_padding_margin"
+        app:cardElevation="@dimen/common_padding_margin"
         app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_3"
         app:layout_constraintEnd_toStartOf="@id/vertical_guideline_1"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
             android:id="@+id/imgMovie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             tools:src="@mipmap/ic_launcher" />
 
     </com.google.android.material.card.MaterialCardView>
@@ -76,57 +76,47 @@
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:fontFamily="sans-serif-black"
-        android:textSize="26sp"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMaxTextSize="30sp"
-        app:autoSizeMinTextSize="20sp"
-        app:autoSizeStepGranularity="2sp"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        style="@style/textTitles"
         app:layout_constraintBottom_toTopOf="@+id/tv_genre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline_1"
         app:layout_constraintTop_toBottomOf="@+id/imgBackground"
-        tools:text="Free Guy" />
+        tools:text="The lord of the rings: The two towers" />
 
     <TextView
         android:id="@+id/tv_genre"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/cv_favorite"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        style="@style/textDescriptionAndGenre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_3"
         tools:text="Comedy, Action, Adventure, Science Fiction" />
 
 
     <TextView
         android:id="@+id/tv_reviews"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:textColor="@color/white"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        style="@style/textInBackground"
         app:drawableStartCompat="@drawable/ic_baseline_star"
-        app:drawableTint="@color/white"
         app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline_1"
-        app:layout_constraintTop_toTopOf="@id/cardView"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_1"
         tools:text="7.1(4123 Reviews)" />
 
     <TextView
         android:id="@+id/tv_popularity"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:textAlignment="center"
-        android:textColor="@color/white"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        style="@style/textInBackground"
         app:drawableStartCompat="@drawable/ic_popularity"
-        app:drawableTint="@color/white"
         app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline_1"
@@ -136,12 +126,10 @@
     <TextView
         android:id="@+id/tv_calendar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:textColor="@color/white"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        style="@style/textInBackground"
         app:drawableStartCompat="@drawable/ic_baseline_calendar_today"
-        app:drawableTint="@color/white"
         app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline_1"
@@ -181,7 +169,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.65" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_guideline_1"
@@ -211,34 +199,34 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.85" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontal_guideline_6"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal_guideline_6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_rate_movie"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/common_padding_margin"
+        android:layout_marginBottom="@dimen/common_padding_margin"
         android:text="@string/rate_it"
         android:textAlignment="viewStart"
-        app:elevation="16dp"
+        app:cornerRadius="@dimen/max_common_value"
         app:icon="@drawable/ic_baseline_star"
         app:iconGravity="end"
         app:layout_constraintBottom_toTopOf="@id/horizontal_guideline_6"
         app:layout_constraintEnd_toEndOf="@id/cardView"
         app:layout_constraintStart_toStartOf="@id/cardView"
-        app:layout_constraintTop_toBottomOf="@id/cardView" />
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_3" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/cv_favorite"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:background="?attr/selectableItemBackground"
+        android:layout_margin="@dimen/common_min_padding_margin"
         android:src="@drawable/ic_baseline_favorite_border"
         app:layout_constraintBottom_toBottomOf="@id/btn_rate_movie"
         app:layout_constraintEnd_toStartOf="@id/vertical_guideline_2"
@@ -249,8 +237,9 @@
         android:id="@+id/tv_language"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
         android:gravity="center_horizontal"
+        app:autoSizeTextType="uniform"
         app:drawableStartCompat="@drawable/ic_baseline_language"
         app:layout_constraintBottom_toBottomOf="@id/btn_rate_movie"
         app:layout_constraintEnd_toStartOf="@id/vertical_guideline_4"
@@ -262,9 +251,9 @@
         android:id="@+id/btn_share"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/common_min_padding_margin"
         android:background="?attr/selectableItemBackground"
-        android:padding="8dp"
+        android:padding="@dimen/common_min_padding_margin"
         android:src="@drawable/ic_baseline_share"
         app:layout_constraintBottom_toBottomOf="@id/btn_rate_movie"
         app:layout_constraintEnd_toEndOf="parent"
@@ -275,34 +264,36 @@
         android:id="@+id/tv_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/common_padding_margin"
         android:text="@string/description"
         android:textSize="20sp"
         android:textStyle="bold"
+
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_6" />
 
-    <TextView
-        android:id="@+id/tv_description_details"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:autoSizeStepGranularity="2sp"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeMaxTextSize="16sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_description"
-        app:layout_constraintVertical_bias="0"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-        ut aliquip ex ea commodo consequat." />
 
-    <androidx.constraintlayout.widget.Barrier
+        <TextView
+            android:id="@+id/tv_description_details"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/common_padding_margin"
+            android:layout_marginStart="@dimen/common_padding_margin"
+            android:layout_marginEnd="@dimen/common_padding_margin"
+            android:layout_marginBottom="@dimen/common_padding_margin"
+            style="@style/textDescriptionAndGenre"
+            tools:text="@string/example_description"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"/>
+
+
+        <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -318,4 +309,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+    </ScrollView>
