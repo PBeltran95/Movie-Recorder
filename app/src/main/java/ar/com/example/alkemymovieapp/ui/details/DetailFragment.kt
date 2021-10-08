@@ -13,6 +13,7 @@ import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.*
 import ar.com.example.alkemymovieapp.core.*
 import ar.com.example.alkemymovieapp.data.models.MovieDetail
+import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.FragmentDetailBinding
 import ar.com.example.alkemymovieapp.presentation.remote.MovieViewModel
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -50,7 +51,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         })
     }
 
-    private fun drawDetails(data: MovieDetail) {
+    private fun drawDetails(data: MovieEntity) {
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             binding.verticalGuideline1.setGuidelinePercent(0.35F)
             binding.horizontalGuideline3.setGuidelinePercent(0.68F)
@@ -59,10 +60,9 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.backdrop_path}", binding.imgBackground,true)
         setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.poster_path}", binding.imgMovie)
-        val genresToText = mutableListOf<String>()
-        data.genres.forEach { genresToText.add(it.name) }
+
         with(binding) {
-            tvGenre.text = genresToText.toString().removeSuffix("]").removePrefix("[")
+            tvGenre.text = data.genres.removeSuffix("]").removePrefix("[")
             tvTitle.text = data.title
             tvCalendar.text = getString(R.string.release_date, data.release_date)
             tvLanguage.text = getString(R.string.movie_language, data.original_language)

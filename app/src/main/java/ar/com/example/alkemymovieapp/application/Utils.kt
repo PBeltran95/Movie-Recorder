@@ -7,16 +7,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ar.com.example.alkemymovieapp.core.Resource
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 fun Any.setGlide(context: Context, data: String, imgView: ImageView, centerCrop : Boolean = false) {
     if (centerCrop){
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500/${data}")
             .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imgView)
     }else{
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500/${data}")
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(imgView)
     }
 }

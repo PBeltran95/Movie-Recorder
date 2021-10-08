@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class MovieDataSource @Inject constructor(private val webService: WebService){
+class RemoteMovieDataSource @Inject constructor(private val webService: WebService){
 
     suspend fun getPopularMovies():MovieList = webService.getPopularMovies(AppConstants.API_KEY)
 
