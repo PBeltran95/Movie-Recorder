@@ -210,12 +210,12 @@
         app:layout_constraintStart_toStartOf="@id/img_movie"
         app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_3" />
 
-    <ImageView
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/cv_favorite"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/common_min_padding_margin"
-        android:src="@drawable/ic_baseline_favorite_border"
+        android:text="@null"
+        android:button="@drawable/favorite_button_states"
         app:layout_constraintBottom_toBottomOf="@id/btn_rate_movie"
         app:layout_constraintEnd_toStartOf="@id/vertical_guideline_2"
         app:layout_constraintStart_toStartOf="@id/vertical_guideline_1"

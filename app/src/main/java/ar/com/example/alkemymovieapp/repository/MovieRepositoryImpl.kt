@@ -13,10 +13,15 @@ class MovieRepositoryImpl @Inject constructor (private val remoteDataSourceRemot
 
 
     override suspend fun getMovieDetails(movieId:String): MovieEntity {
-        remoteDataSourceRemote.getMovieDetails(movieId).also { movie ->
-            localDataSource.saveMovie(movie.toMovieEntity())
+
+        return if (localDataSource.elementExists(movieId)){
+            localDataSource.getMovieDetails(movieId)
+        }else{
+            remoteDataSourceRemote.getMovieDetails(movieId).also { movie ->
+                localDataSource.saveMovie(movie.toMovieEntity())
+            }
+            localDataSource.getMovieDetails(movieId)
         }
 
-        return localDataSource.getMovieDetails(movieId)
     }
 }
