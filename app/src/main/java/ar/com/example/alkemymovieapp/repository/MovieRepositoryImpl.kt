@@ -19,5 +19,4 @@ class MovieRepositoryImpl @Inject constructor (private val remoteDataSourceRemot
 
         return localDataSource.getMovieDetails(movieId)
     }
-
 }

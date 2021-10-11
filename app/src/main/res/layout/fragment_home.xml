@@ -33,4 +33,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/movie_item"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/error_message_anim"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/empty"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package ar.com.example.alkemymovieapp.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ import ar.com.example.alkemymovieapp.databinding.MovieItemBinding
 import com.bumptech.glide.Glide
 
 class HomeAdapter(
-    private val movieList: List<Movie>,
+    private var movieList: MutableList<Movie>,
     private val itemClickListener: OnMovieClickListener
 ) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
@@ -22,6 +23,12 @@ class HomeAdapter(
 
     interface OnMovieClickListener {
         fun onMovieClick(movie: Movie)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(movieList: MutableList<Movie>){
+        this.movieList = movieList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {

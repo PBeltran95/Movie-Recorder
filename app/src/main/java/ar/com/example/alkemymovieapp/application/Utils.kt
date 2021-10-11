@@ -14,12 +14,12 @@ fun Any.setGlide(context: Context, data: String, imgView: ImageView, centerCrop 
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500/${data}")
             .centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imgView)
     }else{
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500/${data}")
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imgView)
     }
 }
