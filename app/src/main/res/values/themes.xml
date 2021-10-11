@@ -53,6 +53,13 @@
         <item name="android:baselineAligned">false</item>
     </style>
 
+    <style name="roundedSquare">
+
+        <item name="cornerSize">10%</item>
+
+
+    </style>
+
 
 
 

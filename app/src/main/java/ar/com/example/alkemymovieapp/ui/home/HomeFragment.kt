@@ -48,9 +48,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
             when (it) {
                 is Resource.Loading -> {
                     binding.progressBar.isVisible = true
+                    binding.rvHome.isVisible = false
                 }
                 is Resource.Success -> {
                     binding.progressBar.isVisible = false
+                    binding.rvHome.isVisible = true
                     val movieList = it.data.results
                     commonListOfMovies.apply {
                         clear()
@@ -74,6 +76,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
         myAdapter = HomeAdapter(movieList, this@HomeFragment)
         binding.rvHome.adapter = myAdapter
+        binding.rvHome.setHasFixedSize(true)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // landscape

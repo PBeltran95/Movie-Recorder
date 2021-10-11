@@ -3,22 +3,34 @@ package ar.com.example.alkemymovieapp.application
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.core.Resource
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 fun Any.setGlide(context: Context, data: String, imgView: ImageView, centerCrop : Boolean = false) {
+
+    val circleProgressBar =  CircularProgressDrawable(context).apply {
+        setColorSchemeColors(R.color.teal_200)
+        strokeWidth = 5f
+        centerRadius = 30f
+        start()
+    }
     if (centerCrop){
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500/${data}")
             .centerCrop()
+            .placeholder(circleProgressBar)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imgView)
     }else{
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500/${data}")
+            .placeholder(circleProgressBar)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(imgView)
     }

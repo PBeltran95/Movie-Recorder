@@ -12,4 +12,5 @@
     <string name="reviews">Score: %1$s (%2$d  reviews)</string>
     <string name="movie_popularity">Views: %1$s </string>
     <string name="search">search</string>
+    <string name="search_bar_title">Search</string>
 </resources>
