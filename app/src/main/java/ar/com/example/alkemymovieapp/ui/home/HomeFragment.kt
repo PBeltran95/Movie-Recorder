@@ -14,7 +14,7 @@ import ar.com.example.alkemymovieapp.application.handleApiError
 import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.Movie
 import ar.com.example.alkemymovieapp.databinding.FragmentHomeBinding
-import ar.com.example.alkemymovieapp.presentation.remote.MovieViewModel
+import ar.com.example.alkemymovieapp.presentation.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -80,10 +80,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // landscape
-            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(),2) {
+            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(),3) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
-                    lp.height = height * 2
-                    lp.width = width / 2
+
+                    lp.height = ((height / 1.5) * 2).toInt()
+                    lp.width = width / 3
+
                     return true
                 }
             }
@@ -91,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
             // portrait
             binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(),3) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
-                    // landscape
+
                     lp.height = height / 3
                     return true
                 }

@@ -1,4 +1,4 @@
-package ar.com.example.alkemymovieapp.presentation.remote
+package ar.com.example.alkemymovieapp.presentation
 
 import androidx.lifecycle.*
 import ar.com.example.alkemymovieapp.core.Resource
@@ -56,8 +56,7 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
 
         val data = listToFilter.filter {
 
-            it.title.lowercase().contains(query!!.lowercase()) || it.overview.lowercase()
-                .contains(query.lowercase())
+            it.title.lowercase().contains(query!!.lowercase())
         }
 
         _noMatchesForQuery.value = data.isEmpty()

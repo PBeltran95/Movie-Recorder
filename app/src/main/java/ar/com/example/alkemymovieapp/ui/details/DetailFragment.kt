@@ -11,11 +11,9 @@ import androidx.navigation.fragment.navArgs
 import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.*
 import ar.com.example.alkemymovieapp.core.*
-import ar.com.example.alkemymovieapp.data.models.MovieDetail
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.FragmentDetailBinding
-import ar.com.example.alkemymovieapp.presentation.remote.MovieViewModel
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import ar.com.example.alkemymovieapp.presentation.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
