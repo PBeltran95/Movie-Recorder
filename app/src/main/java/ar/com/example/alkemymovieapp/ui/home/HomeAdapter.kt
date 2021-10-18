@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.setGlide
@@ -14,10 +15,10 @@ import ar.com.example.alkemymovieapp.databinding.MovieItemBinding
 import com.bumptech.glide.Glide
 
 class HomeAdapter(
-    private var movieList: MutableList<Movie>,
     private val itemClickListener: OnMovieClickListener
 ) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
+    private var movieList = mutableListOf<Movie>()
     private lateinit var context: Context
 
 
@@ -25,10 +26,11 @@ class HomeAdapter(
         fun onMovieClick(movie: Movie)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(movieList: MutableList<Movie>){
-        this.movieList = movieList
-        notifyDataSetChanged()
+    fun setData(newList: MutableList<Movie>){
+        val diffUtil = DiffUtils(movieList, newList)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        this.movieList = newList
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {

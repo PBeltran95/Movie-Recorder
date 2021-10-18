@@ -74,17 +74,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private fun setupRecyclerView(movieList: MutableList<Movie>) {
 
-        myAdapter = HomeAdapter(movieList, this@HomeFragment)
+        myAdapter = HomeAdapter(this@HomeFragment)
         binding.rvHome.adapter = myAdapter
+        myAdapter.setData(movieList)
         binding.rvHome.setHasFixedSize(true)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // landscape
-            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(),3) {
+            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(),6) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
-                    lp.height = ((height / 1.5) * 2).toInt()
-                    lp.width = width / 3
+                    lp.height = ((height / 3) * 2)
+                    lp.width = width / 6
 
                     return true
                 }
