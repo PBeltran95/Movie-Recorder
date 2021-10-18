@@ -27,7 +27,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModels<MovieViewModel>()
-    private lateinit var myAdapter: HomeAdapter
+    private val myAdapter by lazy { HomeAdapter(this@HomeFragment) }
     private var commonListOfMovies: MutableList<Movie> = mutableListOf()
     private var myListToFilter: MutableList<Movie> = mutableListOf()
 
@@ -74,9 +74,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private fun setupRecyclerView(movieList: MutableList<Movie>) {
 
-        myAdapter = HomeAdapter(this@HomeFragment)
         binding.rvHome.adapter = myAdapter
         myAdapter.setData(movieList)
+        binding.rvHome.scheduleLayoutAnimation()
         binding.rvHome.setHasFixedSize(true)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {

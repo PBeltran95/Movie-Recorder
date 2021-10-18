@@ -29,6 +29,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:padding="@dimen/common_min_padding_margin"
         app:spanCount="3"
+        android:layoutAnimation="@anim/recyclerview_anim"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
