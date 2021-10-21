@@ -143,6 +143,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 page++
                 fetchMovies(page)
             }else{toast(requireContext(), "Swipe Down to change to page: ${page +1}")}
+            when (page){
+                1000 -> toast(requireContext(), "Last page")
+                1001 -> {page = 1
+                        fetchMovies(page)
+                }
+            }
         }
 
     }
