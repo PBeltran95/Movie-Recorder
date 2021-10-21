@@ -9,7 +9,7 @@ class MovieRepositoryImpl @Inject constructor (private val remoteDataSourceRemot
                                             private val localDataSource: LocalMovieDataSource):
     MovieRepository {
 
-    override suspend fun getPopularMovies(): MovieList = remoteDataSourceRemote.getPopularMovies()
+    override suspend fun getPopularMovies(page:Int): MovieList = remoteDataSourceRemote.getPopularMovies(page)
 
 
     override suspend fun getMovieDetails(movieId:String): MovieEntity {

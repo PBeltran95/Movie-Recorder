@@ -37,9 +37,10 @@ fun Any.setGlide(context: Context, data: String, imgView: ImageView, centerCrop 
 }
 
 
-fun Fragment.toast(context: Context, text: String) {
-
-    Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+fun Fragment.toast(context: Context, text: String, longMessage: Boolean = true) {
+    if (longMessage){
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+    }else{ Toast.makeText(context, text, Toast.LENGTH_SHORT).show()}
 }
 
 fun Fragment.handleApiError(failure: Resource.Failure){

@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteMovieDataSource @Inject constructor(private val webService: WebService){
 
-    suspend fun getPopularMovies():MovieList = webService.getPopularMovies(AppConstants.API_KEY)
+    suspend fun getPopularMovies(page:Int):MovieList = webService.getPopularMovies(AppConstants.API_KEY, page)
 
     suspend fun getMovieDetails(movieId:String):MovieDetail = webService.getMovieDetails(movieId,AppConstants.API_KEY)
 

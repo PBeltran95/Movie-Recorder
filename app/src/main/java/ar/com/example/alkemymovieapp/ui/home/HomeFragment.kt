@@ -2,6 +2,7 @@ package ar.com.example.alkemymovieapp.ui.home
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.fragment.app.Fragment
@@ -20,16 +21,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.core.view.isVisible
 import ar.com.example.alkemymovieapp.R
+import ar.com.example.alkemymovieapp.application.toast
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickListener, SearchView.OnQueryTextListener{
+class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickListener,
+    SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModels<MovieViewModel>()
     private val myAdapter by lazy { HomeAdapter(this@HomeFragment) }
     private var commonListOfMovies: MutableList<Movie> = mutableListOf()
     private var myListToFilter: MutableList<Movie> = mutableListOf()
+    var swipedTimes = 0
+    var page = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +46,21 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-        fetchMovies()
+        fetchMovies(page)
+        listenScroll()
+        returnToPageOne()
     }
 
-    private fun fetchMovies() {
-        viewModel.fetchMovies().observe(viewLifecycleOwner, Observer {
+    private fun returnToPageOne() {
+        binding.swipeToRefresh.setOnRefreshListener {
+            page = 1
+            fetchMovies(page)
+            binding.swipeToRefresh.isRefreshing = false
+        }
+    }
+
+    private fun fetchMovies(page: Int) {
+        viewModel.fetchMovies(page).observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Loading -> {
                     binding.progressBar.isVisible = true
@@ -63,6 +79,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                         addAll(movieList)
                     }
                     setupRecyclerView(commonListOfMovies)
+                    toast(requireContext(), "Showing page: $page", false)
                 }
                 is Resource.Failure -> {
                     binding.progressBar.isVisible = false
@@ -74,14 +91,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private fun setupRecyclerView(movieList: MutableList<Movie>) {
 
+
         binding.rvHome.adapter = myAdapter
         myAdapter.setData(movieList)
         binding.rvHome.scheduleLayoutAnimation()
         binding.rvHome.setHasFixedSize(true)
 
+
+
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // landscape
-            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(),6) {
+            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 6) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
                     lp.height = ((height / 3) * 2)
@@ -89,10 +109,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
                     return true
                 }
+
             }
         } else {
             // portrait
-            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(),3) {
+            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 3) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
                     lp.height = height / 3
@@ -100,6 +121,30 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 }
             }
         }
+
+
+    }
+    private fun listenScroll(){
+        binding.rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    swipedTimes++
+                    changePage()
+                }
+            }
+        })
+    }
+
+    private fun changePage() {
+        if (swipedTimes != 0) {
+            if (swipedTimes % 2 == 0) {
+                page++
+                fetchMovies(page)
+            }else{toast(requireContext(), "Swipe Down to change to page: ${page +1}")}
+        }
+
     }
 
     override fun onMovieClick(movie: Movie) {
@@ -109,7 +154,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.search_menu,  menu)
+        inflater.inflate(R.menu.search_menu, menu)
         val searchView = menu.findItem(R.id.search_menu).actionView as SearchView
         searchView.apply {
             isSubmitButtonEnabled = true
@@ -117,32 +162,34 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         }
     }
 
-    private fun modifyData(data: MutableList<Movie>){
+    private fun modifyData(data: MutableList<Movie>) {
         myAdapter.setData(data)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query!!.isNotEmpty()){
+        if (query!!.isNotEmpty()) {
             drawFiltrated(query)
-        }else{
+        } else {
             binding.errorMessageAnim.isVisible = false
-            modifyData(commonListOfMovies)}
+            modifyData(commonListOfMovies)
+        }
         return false
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText!!.isNotEmpty()){
+        if (newText!!.isNotEmpty()) {
             drawFiltrated(newText)
-        }else{
+        } else {
             binding.errorMessageAnim.isVisible = false
-            modifyData(commonListOfMovies)}
+            modifyData(commonListOfMovies)
+        }
         return true
     }
 
-    private fun drawFiltrated(query: String?){
-        viewModel.searchByQuery(myListToFilter,  query)
+    private fun drawFiltrated(query: String?) {
+        viewModel.searchByQuery(myListToFilter, query)
         viewModel.listTofilter.observe(viewLifecycleOwner, Observer { filteredList ->
-                modifyData(filteredList.toMutableList())
+            modifyData(filteredList.toMutableList())
         })
         viewModel.noMatchesForQuery.observe(viewLifecycleOwner, Observer {
             binding.errorMessageAnim.isVisible = it

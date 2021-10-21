@@ -4,7 +4,7 @@ import ar.com.example.alkemymovieapp.data.models.*
 
 interface MovieRepository {
 
-    suspend fun getPopularMovies():MovieList
+    suspend fun getPopularMovies(page:Int):MovieList
 
     suspend fun getMovieDetails(movieId:String): MovieEntity
 }

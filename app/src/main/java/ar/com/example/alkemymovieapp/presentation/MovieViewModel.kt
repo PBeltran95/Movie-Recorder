@@ -13,10 +13,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) : ViewModel() {
 
-    fun fetchMovies() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+    fun fetchMovies(page:Int) = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
         emit(Resource.Loading())
         try {
-            emit(Resource.Success(repo.getPopularMovies()))
+            emit(Resource.Success(repo.getPopularMovies(page)))
         } catch (e: Throwable) {
             when (e) {
                 is HttpException -> {
@@ -63,4 +63,5 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
         _listSaved.value = data
 
     }
+
 }
