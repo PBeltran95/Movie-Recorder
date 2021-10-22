@@ -2,7 +2,6 @@ package ar.com.example.alkemymovieapp.ui.home
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.fragment.app.Fragment
@@ -79,7 +78,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                         addAll(movieList)
                     }
                     setupRecyclerView(commonListOfMovies)
-                    toast(requireContext(), "Showing page: $page", false)
+                    toast(requireContext(), getString(R.string.page_indicator, page.toString()), false)
                 }
                 is Resource.Failure -> {
                     binding.progressBar.isVisible = false
@@ -91,13 +90,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private fun setupRecyclerView(movieList: MutableList<Movie>) {
 
-
         binding.rvHome.adapter = myAdapter
         myAdapter.setData(movieList)
         binding.rvHome.scheduleLayoutAnimation()
         binding.rvHome.setHasFixedSize(true)
-
-
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // landscape
@@ -109,7 +105,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
                     return true
                 }
-
             }
         } else {
             // portrait
@@ -121,10 +116,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 }
             }
         }
-
-
     }
-    private fun listenScroll(){
+
+    private fun listenScroll() {
         binding.rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -138,16 +132,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     }
 
     private fun changePage() {
-        if (swipedTimes != 0) {
-            if (swipedTimes % 2 == 0) {
-                page++
+
+      if (swipedTimes != 0 && swipedTimes % 2 == 0) {
+          page++
+          fetchMovies(page)
+      } else {
+          toast(requireContext(), getString(R.string.next_page_indicator,(page+1).toString()), false)
+      }
+        when (page) {
+            1000 -> toast(requireContext(), getString(R.string.last_page))
+            1001 -> {
+                page = 1
                 fetchMovies(page)
-            }else{toast(requireContext(), "Swipe Down to change to page: ${page +1}")}
-            when (page){
-                1000 -> toast(requireContext(), "Last page")
-                1001 -> {page = 1
-                        fetchMovies(page)
-                }
             }
         }
 

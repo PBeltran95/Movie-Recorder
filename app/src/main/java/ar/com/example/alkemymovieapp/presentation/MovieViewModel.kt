@@ -61,7 +61,6 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
 
         _noMatchesForQuery.value = data.isEmpty()
         _listSaved.value = data
-
     }
 
 }
