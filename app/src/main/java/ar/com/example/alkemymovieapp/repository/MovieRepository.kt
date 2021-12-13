@@ -7,4 +7,6 @@ interface MovieRepository {
     suspend fun getPopularMovies(page:Int):MovieList
 
     suspend fun getMovieDetails(movieId:String): MovieEntity
+
+    suspend fun saveFavoriteMovie(favoriteMovie: MovieEntity)
 }

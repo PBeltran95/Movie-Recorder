@@ -28,4 +28,14 @@
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>
+    <fragment
+        android:id="@+id/watchedFragment"
+        android:name="ar.com.example.alkemymovieapp.ui.watched.WatchedFragment"
+        android:label="fragment_watched"
+        tools:layout="@layout/fragment_watched" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="ar.com.example.alkemymovieapp.ui.favorites.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
 </navigation>

@@ -21,6 +21,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private lateinit var binding: FragmentDetailBinding
     private val args: DetailFragmentArgs by navArgs()
+    private lateinit var favoriteMovie: MovieEntity
     private val viewModel by viewModels<MovieViewModel>()
 
 
@@ -28,6 +29,27 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDetailBinding.bind(view)
         fetchMovieDetails()
+        setButtons()
+    }
+
+    private fun setButtons() {
+        binding.cvFavorite.setOnCheckedChangeListener { compoundButton, b ->
+            if (compoundButton.isChecked){
+                saveFavorite()
+            }else deleteFavorite()
+        }
+    }
+
+    private fun deleteFavorite() {
+        viewModel.saveFavoriteMovie(favoriteMovie.also {
+            it.isFavorite = false
+        })
+    }
+
+    private fun saveFavorite() {
+        viewModel.saveFavoriteMovie(favoriteMovie.also {
+            it.isFavorite = true
+        })
     }
 
     private fun fetchMovieDetails() {
@@ -39,6 +61,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 }
                 is Resource.Success -> {
                     binding.progressBar.isVisible = false
+                    favoriteMovie = it.data
                     drawDetails(it.data)
                 }
                 is Resource.Failure -> {
@@ -67,6 +90,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             tvReviews.text = getString(R.string.reviews, data.vote_average.toString(), data.vote_count)
             tvPopularity.text = getString(R.string.movie_popularity, data.popularity.toString())
             tvDescriptionDetails.text = data.overview
+            cvFavorite.isChecked = data.isFavorite
         }
     }
 }

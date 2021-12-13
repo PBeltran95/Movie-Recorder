@@ -16,4 +16,7 @@
     <string name="page_indicator">Showing page: %1$s</string>
     <string name="next_page_indicator">Swipe Down to change to page: %1$s</string>
     <string name="last_page">Last page</string>
+    <string name="home_menu">Home</string>
+    <string name="watchedFilms_menu">Watched</string>
+    <string name="favorites_menu">Favorites</string>
 </resources>

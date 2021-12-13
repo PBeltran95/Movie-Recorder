@@ -1,6 +1,5 @@
 package ar.com.example.alkemymovieapp.data.models
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -40,7 +39,8 @@ data class MovieDetail(
     val title: String = "",
     val video: Boolean = false,
     val vote_average: Double = -1.0,
-    val vote_count: Int = -1
+    val vote_count: Int = -1,
+    var isFavorite: Boolean
 )
 data class Genres(
     val id:Int = -1,
@@ -51,20 +51,21 @@ data class Genres(
 @Entity
 data class MovieEntity(
     @PrimaryKey(autoGenerate = false)
-    val id: Int = 0,
-    val adult:Boolean = false,
-    val backdrop_path: String = "",
-    val genres: String = "",
-    val original_title: String = "",
-    val original_language: String = "",
-    val overview: String = "",
-    val popularity: Double = 0.0,
-    val poster_path: String = "",
-    val release_date: String = "",
-    val title: String = "",
-    val video: Boolean = false,
-    val vote_average: Double = 0.0,
-    val vote_count: Int = 0
+    var id: Int = 0,
+    var adult:Boolean = false,
+    var backdrop_path: String = "",
+    var genres: String = "",
+    var original_title: String = "",
+    var original_language: String = "",
+    var overview: String = "",
+    var popularity: Double = 0.0,
+    var poster_path: String = "",
+    var release_date: String = "",
+    var title: String = "",
+    var video: Boolean = false,
+    var vote_average: Double = 0.0,
+    var vote_count: Int = 0,
+    var isFavorite: Boolean = false
 )
 
 fun MovieDetail.toMovieEntity():MovieEntity = MovieEntity(
@@ -81,5 +82,6 @@ fun MovieDetail.toMovieEntity():MovieEntity = MovieEntity(
     this.title,
     this.video,
     this.vote_average,
-    this.vote_count
+    this.vote_count,
+    this.isFavorite
 )

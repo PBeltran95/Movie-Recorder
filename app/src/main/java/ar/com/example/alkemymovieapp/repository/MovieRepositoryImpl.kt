@@ -24,4 +24,10 @@ class MovieRepositoryImpl @Inject constructor (private val remoteDataSourceRemot
         }
 
     }
+
+    override suspend fun saveFavoriteMovie(favoriteMovie: MovieEntity) {
+        localDataSource.saveMovie(favoriteMovie)
+    }
+
+
 }

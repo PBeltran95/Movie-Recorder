@@ -7,6 +7,8 @@ import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.repository.MovieRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -47,20 +49,28 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
         }
 
     private var _listSaved = MutableLiveData<List<Movie>>()
-    val listTofilter: LiveData<List<Movie>> = _listSaved
+    val listTofilter: LiveData<List<Movie>>
+        get() = _listSaved
     private var _noMatchesForQuery = MutableLiveData<Boolean>()
-    val noMatchesForQuery: LiveData<Boolean> = _noMatchesForQuery
+    val noMatchesForQuery: LiveData<Boolean>
+        get() = _noMatchesForQuery
 
 
     fun searchByQuery(listToFilter: MutableList<Movie>, query: String?) {
 
         val data = listToFilter.filter {
 
-            it.title.lowercase().contains(query!!.lowercase())
+            it.title.lowercase().contains(query!!.lowercase().trim())
         }
 
         _noMatchesForQuery.value = data.isEmpty()
         _listSaved.value = data
+    }
+
+    fun saveFavoriteMovie(favoriteMovie: MovieEntity){
+        viewModelScope.launch(Dispatchers.IO){
+            repo.saveFavoriteMovie(favoriteMovie)
+        }
     }
 
 }
