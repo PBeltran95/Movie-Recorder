@@ -36,7 +36,6 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
             try {
                 emit(Resource.Success(repo.getMovieDetails(movieId)))
             } catch (e: Throwable) {
-                Log.d("Error", e.message!!)
                 when (e) {
                     is HttpException -> {
                         emit(Resource.Failure(false, e.code(), e.response()?.errorBody()))
