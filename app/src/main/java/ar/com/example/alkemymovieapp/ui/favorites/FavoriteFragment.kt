@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.com.example.alkemymovieapp.R
@@ -15,10 +16,10 @@ import ar.com.example.alkemymovieapp.presentation.LocalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
+class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.OnClick {
 
     private lateinit var binding: FragmentFavoriteBinding
-    private val adapter by lazy { FavoriteAdapter() }
+    private val adapter by lazy { FavoriteAdapter(this) }
     private val viewModel by viewModels<LocalViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,5 +68,10 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
                 }
             }
         }
+    }
+
+    override fun onFavoriteClick(movieEntity: MovieEntity) {
+        val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(movieEntity.id)
+        findNavController().navigate(action)
     }
 }

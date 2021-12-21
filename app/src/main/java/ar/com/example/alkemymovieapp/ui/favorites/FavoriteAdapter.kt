@@ -11,7 +11,12 @@ import ar.com.example.alkemymovieapp.application.setGlide
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.MovieItemBinding
 
-class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
+class FavoriteAdapter(private val movieClick: OnClick): RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
+
+    interface OnClick{
+        fun onFavoriteClick(movieEntity:MovieEntity)
+    }
+
     private lateinit var context: Context
     private var favoriteList: List<MovieEntity> = listOf()
 
@@ -31,7 +36,7 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>(
         val item = favoriteList[position]
         with(holder){
             setGlide(context, item.poster_path, binding.imgMovie)
-            binding.root.setOnClickListener { Toast.makeText(context, "hola ${item.title}", Toast.LENGTH_SHORT).show() }
+            binding.root.setOnClickListener { movieClick.onFavoriteClick(item) }
         }
     }
 

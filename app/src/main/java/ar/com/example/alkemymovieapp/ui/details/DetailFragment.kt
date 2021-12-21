@@ -1,12 +1,13 @@
 package ar.com.example.alkemymovieapp.ui.details
 
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.*
@@ -15,6 +16,7 @@ import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.FragmentDetailBinding
 import ar.com.example.alkemymovieapp.presentation.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.reflect.typeOf
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
@@ -33,12 +35,15 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun setButtons() {
-        binding.cvFavorite.setOnCheckedChangeListener { compoundButton, b ->
-            if (compoundButton.isChecked){
-                saveFavorite()
-            }else deleteFavorite()
+        with(binding) {
+            cvFavorite.setOnCheckedChangeListener { compoundButton, b ->
+                if (compoundButton.isChecked) {
+                    saveFavorite()
+                } else deleteFavorite()
+            }
         }
     }
+
 
     private fun deleteFavorite() {
         viewModel.saveFavoriteMovie(favoriteMovie.also {
@@ -54,7 +59,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun fetchMovieDetails() {
         val movieId = args.movieId.toString()
-        viewModel.fetchMovieDetails(movieId).observe(viewLifecycleOwner, Observer {
+        viewModel.fetchMovieDetails(movieId).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
                     binding.progressBar.isVisible = true
@@ -69,28 +74,72 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     handleApiError(it)
                 }
             }
-        })
+        }
     }
 
     private fun drawDetails(data: MovieEntity) {
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             binding.verticalGuideline1.setGuidelinePercent(0.35F)
             binding.horizontalGuideline3.setGuidelinePercent(0.68F)
-            setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.backdrop_path}", binding.imgBackground)
+            setGlide(
+                requireContext(),
+                "https://image.tmdb.org/t/p/w500/${data.backdrop_path}",
+                binding.imgBackground
+            )
         }
 
-        setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.backdrop_path}", binding.imgBackground,true)
-        setGlide(requireContext(), "https://image.tmdb.org/t/p/w500/${data.poster_path}", binding.imgMovie)
+        setGlide(
+            requireContext(),
+            "https://image.tmdb.org/t/p/w500/${data.backdrop_path}",
+            binding.imgBackground,
+            true
+        )
+        setGlide(
+            requireContext(),
+            "https://image.tmdb.org/t/p/w500/${data.poster_path}",
+            binding.imgMovie
+        )
 
         with(binding) {
             tvGenre.text = data.genres.removeSuffix("]").removePrefix("[")
             tvTitle.text = data.title
             tvCalendar.text = getString(R.string.release_date, data.release_date)
             tvLanguage.text = getString(R.string.movie_language, data.original_language)
-            tvReviews.text = getString(R.string.reviews, data.vote_average.toString(), data.vote_count)
+            tvReviews.text =
+                getString(R.string.reviews, data.vote_average.toString(), data.vote_count)
             tvPopularity.text = getString(R.string.movie_popularity, data.popularity.toString())
             tvDescriptionDetails.text = data.overview
             cvFavorite.isChecked = data.isFavorite
+
+            btnTrailer.setOnClickListener {
+                setTrailerIntent(data.title)
+            }
+            btnShare.setOnClickListener {
+                shareData(data.title)
+            }
         }
+
     }
+
+    private fun shareData(title: String) {
+        val sendApp:Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, formatTitle(title).toString())
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendApp, null)
+        startActivity(shareIntent)
+    }
+
+    private fun setTrailerIntent(title: String) {
+        val trailerIntent = Intent(Intent.ACTION_VIEW, formatTitle(title))
+        startActivity(trailerIntent)
+    }
+
+    private fun formatTitle(title: String): Uri {
+        val formattedTitle = title.replace("[-,:. ]".toRegex(), "+")
+        return Uri.parse("https://www.youtube.com/results?search_query=${formattedTitle}+trailer")
+    }
+
+
 }

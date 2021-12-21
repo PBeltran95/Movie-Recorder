@@ -19,4 +19,5 @@
     <string name="home_menu">Home</string>
     <string name="watchedFilms_menu">Watched</string>
     <string name="favorites_menu">Favorites</string>
+    <string name="btn_trailer_text">Trailer!</string>
 </resources>

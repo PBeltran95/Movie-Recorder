@@ -28,6 +28,4 @@ class LocalViewModel @Inject constructor (private val repo: LocalMovieRepo): Vie
             }
         }
     }
-
-
 }
