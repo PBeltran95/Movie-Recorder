@@ -6,9 +6,12 @@ import retrofit2.http.*
 
 interface WebService {
 
-    @GET("popular")
+    @GET("movie/popular")
     suspend fun getPopularMovies(@Query("api_key") apiKey: String, @Query("page") page:Int) : MovieList
 
     @GET
     suspend fun getMovieDetails(@Url movieId:String, @Query("api_key") apiKey: String) : MovieDetail
+
+    @GET("search/movie")
+    suspend fun searchMovieByTitle(@Query("api_key") apiKey: String, @Query("query") movieTitle:String): MovieList
 }

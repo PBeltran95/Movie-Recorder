@@ -1,14 +1,13 @@
 package ar.com.example.alkemymovieapp.presentation
 
+import android.util.Log
 import androidx.lifecycle.*
 import ar.com.example.alkemymovieapp.core.Resource
-import ar.com.example.alkemymovieapp.data.models.Movie
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.repository.MovieRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -32,11 +31,12 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
     }
 
     fun fetchMovieDetails(movieId: String) =
-        liveData<Resource<MovieEntity>>(viewModelScope.coroutineContext + Dispatchers.IO) {
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(Resource.Loading())
             try {
                 emit(Resource.Success(repo.getMovieDetails(movieId)))
             } catch (e: Throwable) {
+                Log.d("Error", e.message!!)
                 when (e) {
                     is HttpException -> {
                         emit(Resource.Failure(false, e.code(), e.response()?.errorBody()))
@@ -48,23 +48,28 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
             }
         }
 
-    private var _listSaved = MutableLiveData<List<Movie>>()
-    val listTofilter: LiveData<List<Movie>>
-        get() = _listSaved
+    fun searchMovieByTitle(movieTitle: String) = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(repo.searchMovieByTitle(movieTitle)))
+        } catch (e: Throwable) {
+            when (e) {
+                is HttpException -> {
+                    emit(Resource.Failure(false, e.code(), e.response()?.errorBody()))
+                }
+                else -> {
+                    emit(Resource.Failure(true, null, null))
+                }
+            }
+        }
+    }
+
     private var _noMatchesForQuery = MutableLiveData<Boolean>()
     val noMatchesForQuery: LiveData<Boolean>
         get() = _noMatchesForQuery
 
-
-    fun searchByQuery(listToFilter: MutableList<Movie>, query: String?) {
-
-        val data = listToFilter.filter {
-
-            it.title.lowercase().contains(query!!.lowercase().trim())
-        }
-
-        _noMatchesForQuery.value = data.isEmpty()
-        _listSaved.value = data
+    fun evaluateListOfResults(empty: Boolean) {
+        _noMatchesForQuery.value = empty
     }
 
     fun saveFavoriteMovie(favoriteMovie: MovieEntity){

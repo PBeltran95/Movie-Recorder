@@ -13,6 +13,8 @@ class RemoteMovieDataSource @Inject constructor(private val webService: WebServi
 
     suspend fun getPopularMovies(page:Int):MovieList = webService.getPopularMovies(AppConstants.API_KEY, page)
 
-    suspend fun getMovieDetails(movieId:String):MovieDetail = webService.getMovieDetails(movieId,AppConstants.API_KEY)
+    suspend fun getMovieDetails(movieId:String):MovieDetail = webService.getMovieDetails("movie/${movieId}",AppConstants.API_KEY)
+
+    suspend fun searchMovieByTitle(movieTitle: String): MovieList = webService.searchMovieByTitle(AppConstants.API_KEY, movieTitle)
 
 }

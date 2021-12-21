@@ -48,6 +48,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         fetchMovies(page)
         listenScroll()
         returnToPageOne()
+        drawEmptyListError()
     }
 
     private fun returnToPageOne() {
@@ -189,10 +190,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     }
 
     private fun drawFiltrated(query: String?) {
-        viewModel.searchByQuery(myListToFilter, query)
-        viewModel.listTofilter.observe(viewLifecycleOwner, Observer { filteredList ->
-            modifyData(filteredList.toMutableList())
-        })
+        viewModel.searchMovieByTitle(query!!).observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    viewModel.evaluateListOfResults(it.data.results.isEmpty())
+                    modifyData(it.data.results.toMutableList())
+                }
+                is Resource.Failure -> {}
+            }
+        }
+    }
+
+    private fun drawEmptyListError() {
         viewModel.noMatchesForQuery.observe(viewLifecycleOwner, Observer {
             binding.errorMessageAnim.isVisible = it
         })

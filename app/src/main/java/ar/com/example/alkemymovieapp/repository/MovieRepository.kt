@@ -8,5 +8,7 @@ interface MovieRepository {
 
     suspend fun getMovieDetails(movieId:String): MovieEntity
 
+    suspend fun searchMovieByTitle(movieTitle:String): MovieList
+
     suspend fun saveFavoriteMovie(favoriteMovie: MovieEntity)
 }

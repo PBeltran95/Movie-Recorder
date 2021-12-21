@@ -2,6 +2,7 @@ package ar.com.example.alkemymovieapp.di
 
 import android.content.Context
 import androidx.room.Room
+import ar.com.example.alkemymovieapp.BuildConfig
 import ar.com.example.alkemymovieapp.application.AppConstants
 import ar.com.example.alkemymovieapp.core.WebService
 import ar.com.example.alkemymovieapp.data.local.AppDatabase
@@ -30,7 +31,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providesRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl(AppConstants.BASE_URL)
+        .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
         .build()
 
