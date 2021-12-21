@@ -1,6 +1,5 @@
 package ar.com.example.alkemymovieapp.presentation
 
-import android.util.Log
 import androidx.lifecycle.*
 import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
