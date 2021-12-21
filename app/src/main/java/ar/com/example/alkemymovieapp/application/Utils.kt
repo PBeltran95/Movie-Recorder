@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.core.Resource
+import ar.com.example.alkemymovieapp.data.models.Movie
+import ar.com.example.alkemymovieapp.data.models.MovieEntity
+import ar.com.example.alkemymovieapp.data.models.toMovie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
@@ -51,4 +54,8 @@ fun Fragment.handleApiError(failure: Resource.Failure){
         failure.errorCode == 404 -> { toast(requireContext(), "The resource you requested could not be found.") }
         else -> toast(requireContext(), "Error: ${failure.errorBody}")
     }
+}
+
+fun List<MovieEntity>.toListOfMovie(): MutableList<Movie>{
+    return this.map { it.toMovie() }.toMutableList()
 }

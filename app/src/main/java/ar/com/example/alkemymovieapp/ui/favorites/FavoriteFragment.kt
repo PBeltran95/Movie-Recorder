@@ -2,7 +2,10 @@ package ar.com.example.alkemymovieapp.ui.favorites
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,11 +19,18 @@ import ar.com.example.alkemymovieapp.presentation.LocalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.OnClick {
+class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.OnClick, SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentFavoriteBinding
     private val adapter by lazy { FavoriteAdapter(this) }
     private val viewModel by viewModels<LocalViewModel>()
+    private var commonListOfMovies: MutableList<MovieEntity> = mutableListOf()
+    private var myListToFilter: MutableList<MovieEntity> = mutableListOf()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,10 +43,26 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.O
             when(it){
                 is Resource.Loading ->{}
                 is Resource.Success ->{
+                    val movieList = it.data
+                    commonListOfMovies.apply {
+                        clear()
+                        addAll(movieList)
+                    }
+                    myListToFilter.apply {
+                        clear()
+                        addAll(movieList)
+                    }
                     setupRecyclerView(it.data)
                 }
                 is Resource.Failure ->{}
             }
+        }
+
+        viewModel.listTofilter.observe(viewLifecycleOwner) { filteredList ->
+            modifyData(filteredList.toMutableList())
+        }
+        viewModel.noMatchesForQuery.observe(viewLifecycleOwner) {
+            //binding.errorMessageAnim.isVisible = it
         }
     }
 
@@ -70,8 +96,46 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.O
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.search_menu, menu)
+        val searchView = menu.findItem(R.id.search_menu).actionView as SearchView
+        searchView.apply {
+            isSubmitButtonEnabled = true
+            setOnQueryTextListener(this@FavoriteFragment)
+        }
+    }
+
     override fun onFavoriteClick(movieEntity: MovieEntity) {
         val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(movieEntity.id)
         findNavController().navigate(action)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query!!.isNotEmpty()) {
+            drawFiltrated(query)
+        } else {
+            //binding.errorMessageAnim.isVisible = false
+            modifyData(commonListOfMovies)
+        }
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText!!.isNotEmpty()) {
+            drawFiltrated(newText)
+        } else {
+            //binding.errorMessageAnim.isVisible = false
+            modifyData(commonListOfMovies)
+        }
+        return true
+    }
+
+    private fun drawFiltrated(query: String?) {
+        viewModel.searchByQuery(myListToFilter, query)
+    }
+
+    private fun modifyData(data: MutableList<MovieEntity>) {
+        adapter.setFavoriteData(data)
     }
 }

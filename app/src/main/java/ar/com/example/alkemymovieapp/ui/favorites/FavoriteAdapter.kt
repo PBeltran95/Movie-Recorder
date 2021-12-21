@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.setGlide
+import ar.com.example.alkemymovieapp.application.toListOfMovie
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.MovieItemBinding
+import ar.com.example.alkemymovieapp.ui.home.DiffUtils
 
 class FavoriteAdapter(private val movieClick: OnClick): RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
@@ -21,8 +24,10 @@ class FavoriteAdapter(private val movieClick: OnClick): RecyclerView.Adapter<Fav
     private var favoriteList: List<MovieEntity> = listOf()
 
     fun setFavoriteData(newList: List<MovieEntity>){
+        val diffUtils = DiffUtils(favoriteList.toListOfMovie(), newList.toListOfMovie())
+        val diffResult = DiffUtil.calculateDiff(diffUtils)
         this.favoriteList = newList
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
 

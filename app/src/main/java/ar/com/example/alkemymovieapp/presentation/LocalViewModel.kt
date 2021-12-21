@@ -1,9 +1,9 @@
 package ar.com.example.alkemymovieapp.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import ar.com.example.alkemymovieapp.core.Resource
+import ar.com.example.alkemymovieapp.data.models.Movie
+import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,5 +27,24 @@ class LocalViewModel @Inject constructor (private val repo: LocalMovieRepo): Vie
                 }
             }
         }
+    }
+
+    private var _listSaved = MutableLiveData<List<MovieEntity>>()
+    val listTofilter: LiveData<List<MovieEntity>>
+        get() = _listSaved
+    private var _noMatchesForQuery = MutableLiveData<Boolean>()
+    val noMatchesForQuery: LiveData<Boolean>
+        get() = _noMatchesForQuery
+
+
+    fun searchByQuery(listToFilter: MutableList<MovieEntity>, query: String?) {
+
+        val data = listToFilter.filter {
+
+            it.title.lowercase().contains(query!!.lowercase().trim())
+        }
+
+        _noMatchesForQuery.value = data.isEmpty()
+        _listSaved.value = data
     }
 }

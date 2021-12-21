@@ -17,7 +17,8 @@ data class Movie(
     val title: String = "",
     val video: Boolean = false,
     val vote_average: Double = -1.0,
-    val vote_count: Int = -1
+    val vote_count: Int = -1,
+    var isFavorite: Boolean
 )
 
 
@@ -73,6 +74,22 @@ fun MovieDetail.toMovieEntity():MovieEntity = MovieEntity(
     this.adult,
     this.backdrop_path,
     this.genres.map { it.name }.toString(),
+    this.original_title,
+    this.original_language,
+    this.overview,
+    this.popularity,
+    this.poster_path,
+    this.release_date,
+    this.title,
+    this.video,
+    this.vote_average,
+    this.vote_count,
+    this.isFavorite
+)
+fun MovieEntity.toMovie():Movie = Movie(
+    this.id,
+    this.adult,
+    this.backdrop_path,
     this.original_title,
     this.original_language,
     this.overview,
