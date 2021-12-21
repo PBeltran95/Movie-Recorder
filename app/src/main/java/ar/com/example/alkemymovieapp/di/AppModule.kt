@@ -5,6 +5,9 @@ import androidx.room.Room
 import ar.com.example.alkemymovieapp.application.AppConstants
 import ar.com.example.alkemymovieapp.core.WebService
 import ar.com.example.alkemymovieapp.data.local.AppDatabase
+import ar.com.example.alkemymovieapp.data.local.MovieDao
+import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepo
+import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepoImpl
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -14,6 +17,10 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
+/**
+ *
+ */
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,7 +35,6 @@ object AppModule {
         .build()
 
 
-    @Singleton
     @Provides
     fun providesWebService(retrofit: Retrofit) = retrofit.create(WebService::class.java)
 
@@ -39,9 +45,12 @@ object AppModule {
         Room.databaseBuilder(context, AppDatabase::class.java,
         "movie_table").build()
 
-    @Singleton
     @Provides
     fun providesDao(db:AppDatabase) = db.movieDao()
 
+    @Provides
+    fun providesLocalMovieRepoImpl(dao: MovieDao) : LocalMovieRepo {
+        return LocalMovieRepoImpl(dao)
+    }
 
 }
