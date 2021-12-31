@@ -26,6 +26,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private lateinit var favoriteMovie: MovieEntity
     private val viewModel by viewModels<MovieViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        favoriteMovie = MovieEntity()
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
