@@ -22,6 +22,8 @@
         android:id="@+id/bottomNavigationBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/bottom_menu_items"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

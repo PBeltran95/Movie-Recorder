@@ -46,7 +46,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         binding = FragmentHomeBinding.bind(view)
         fetchMovies(page)
         drawEmptyListError()
-        lastPageAdvice()
     }
 
     private fun fetchMovies(page: Int) {
@@ -91,6 +90,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         }
         val searchView = menu.findItem(R.id.search_menu).actionView as SearchView
         searchView.apply {
+            queryHint = context.getString(R.string.home_query_hint)
             isSubmitButtonEnabled = true
             setOnQueryTextListener(this@HomeFragment)
         }
@@ -109,11 +109,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 page++
                 requireActivity().invalidateOptionsMenu()
                 fetchMovies(page)
+                lastPageAdvice()
             }
             R.id.btn_back -> {
                 page--
                 requireActivity().invalidateOptionsMenu()
                 fetchMovies(page)
+                lastPageAdvice()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -152,6 +154,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private fun lastPageAdvice() {
         when (page) {
+            0 -> {
+                page = 1
+                fetchMovies(page)
+            }
             1000 -> toast(requireContext(), getString(R.string.last_page))
             1001 -> {
                 page = 1

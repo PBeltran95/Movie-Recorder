@@ -118,6 +118,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
         inflater.inflate(R.menu.search_menu, menu)
         val searchView = menu.findItem(R.id.search_menu).actionView as SearchView
         searchView.apply {
+            queryHint = context.getString(R.string.favorite_query_hint)
             isSubmitButtonEnabled = true
             setOnQueryTextListener(this@FavoriteFragment)
         }

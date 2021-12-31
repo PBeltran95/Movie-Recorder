@@ -23,4 +23,6 @@
     <string name="next_page_btn">Next page</string>
     <string name="back_page_btn">Back page</string>
     <string name="page_number">1</string>
+    <string name="home_query_hint">Search in global DB...</string>
+    <string name="favorite_query_hint">Search in this list</string>
 </resources>
