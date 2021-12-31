@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <item
+        android:id="@+id/btn_back"
+        android:icon="@drawable/ic_back_arrow"
+        android:title="@string/back_page_btn"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/tv_page_number"
+        android:title="@string/page_number"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/btn_next"
+        android:icon="@drawable/ic_forward_arrow"
+        android:title="@string/next_page_btn"
+        app:showAsAction="always"/>
+
+</menu>

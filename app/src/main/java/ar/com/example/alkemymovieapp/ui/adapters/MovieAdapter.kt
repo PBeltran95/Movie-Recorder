@@ -41,6 +41,7 @@ class MovieAdapter(private val movieClick: OnClick): RecyclerView.Adapter<MovieA
         with(holder){
             setGlide(context, item.poster_path, binding.imgMovie)
             binding.root.setOnClickListener { movieClick.onMovieClick(item) }
+            binding.tvMovieTitle.text = item.title
         }
     }
 

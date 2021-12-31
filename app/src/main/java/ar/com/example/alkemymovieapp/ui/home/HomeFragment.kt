@@ -4,23 +4,24 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import androidx.fragment.app.Fragment
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.handleApiError
+import ar.com.example.alkemymovieapp.application.toast
 import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.Movie
 import ar.com.example.alkemymovieapp.databinding.FragmentHomeBinding
 import ar.com.example.alkemymovieapp.presentation.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.core.view.isVisible
-import ar.com.example.alkemymovieapp.R
-import ar.com.example.alkemymovieapp.application.toast
 
 
 @AndroidEntryPoint
@@ -32,7 +33,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     private val myAdapter by lazy { HomeAdapter(this@HomeFragment) }
     private var commonListOfMovies: MutableList<Movie> = mutableListOf()
     private var myListToFilter: MutableList<Movie> = mutableListOf()
-    var swipedTimes = 0
     var page = 1
 
 
@@ -41,22 +41,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         setHasOptionsMenu(true)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         fetchMovies(page)
-        listenScroll()
-        returnToPageOne()
         drawEmptyListError()
-    }
-
-    private fun returnToPageOne() {
-        binding.swipeToRefresh.setOnRefreshListener {
-            page = 1
-            fetchMovies(page)
-            binding.swipeToRefresh.isRefreshing = false
-        }
+        lastPageAdvice()
     }
 
     private fun fetchMovies(page: Int) {
@@ -79,7 +69,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                         addAll(movieList)
                     }
                     setupRecyclerView(commonListOfMovies)
-                    toast(requireContext(), getString(R.string.page_indicator, page.toString()), false)
                 }
                 is Resource.Failure -> {
                     binding.progressBar.isVisible = false
@@ -89,15 +78,59 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         })
     }
 
+    override fun onMovieClick(movie: Movie) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(movie.id)
+        findNavController().navigate(action)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        with(inflater){
+            inflate(R.menu.search_menu, menu)
+            inflate(R.menu.home_options, menu)
+        }
+        val searchView = menu.findItem(R.id.search_menu).actionView as SearchView
+        searchView.apply {
+            isSubmitButtonEnabled = true
+            setOnQueryTextListener(this@HomeFragment)
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.tv_page_number).apply {
+            title = page.toString()
+            isEnabled = false
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.btn_next -> {
+                page++
+                requireActivity().invalidateOptionsMenu()
+                fetchMovies(page)
+            }
+            R.id.btn_back -> {
+                page--
+                requireActivity().invalidateOptionsMenu()
+                fetchMovies(page)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun setupRecyclerView(movieList: MutableList<Movie>) {
+        setupSizes()
+        with(binding){
+            rvHome.adapter = myAdapter
+            myAdapter.setData(movieList)
+            rvHome.scheduleLayoutAnimation()
+            rvHome.setHasFixedSize(true)
+        }
+    }
 
-        binding.rvHome.adapter = myAdapter
-        myAdapter.setData(movieList)
-        binding.rvHome.scheduleLayoutAnimation()
-        binding.rvHome.setHasFixedSize(true)
-
+    private fun setupSizes(){
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // landscape
             binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 6) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
@@ -108,10 +141,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 }
             }
         } else {
-            // portrait
             binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 3) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
-
                     lp.height = height / 3
                     return true
                 }
@@ -119,49 +150,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         }
     }
 
-    private fun listenScroll() {
-        binding.rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    swipedTimes++
-                    changePage()
-                }
-            }
-        })
-    }
-
-    private fun changePage() {
-
-      if (swipedTimes != 0 && swipedTimes % 2 == 0) {
-          page++
-          fetchMovies(page)
-      } else {
-          toast(requireContext(), getString(R.string.next_page_indicator,(page+1).toString()), false)
-      }
+    private fun lastPageAdvice() {
         when (page) {
             1000 -> toast(requireContext(), getString(R.string.last_page))
             1001 -> {
                 page = 1
                 fetchMovies(page)
             }
-        }
-
-    }
-
-    override fun onMovieClick(movie: Movie) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(movie.id)
-        findNavController().navigate(action)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.search_menu, menu)
-        val searchView = menu.findItem(R.id.search_menu).actionView as SearchView
-        searchView.apply {
-            isSubmitButtonEnabled = true
-            setOnQueryTextListener(this@HomeFragment)
         }
     }
 
