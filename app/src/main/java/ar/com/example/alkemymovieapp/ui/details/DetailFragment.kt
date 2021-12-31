@@ -143,8 +143,12 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun formatTitle(title: String): Uri {
-        val formattedTitle = title.replace("[-,:. ]".toRegex(), "+")
-        return Uri.parse("https://www.youtube.com/results?search_query=${formattedTitle}+trailer")
+        var url: Uri = Uri.EMPTY
+        viewModel.makeUri(title)
+        viewModel.uri.observe(viewLifecycleOwner){
+            url = it
+        }
+        return url
     }
 
 }

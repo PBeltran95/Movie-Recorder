@@ -1,5 +1,6 @@
 package ar.com.example.alkemymovieapp.presentation
 
+import android.net.Uri
 import androidx.lifecycle.*
 import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
@@ -62,7 +63,7 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
         }
     }
 
-    private var _noMatchesForQuery = MutableLiveData<Boolean>()
+    private val _noMatchesForQuery = MutableLiveData<Boolean>()
     val noMatchesForQuery: LiveData<Boolean>
         get() = _noMatchesForQuery
 
@@ -80,6 +81,16 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
         viewModelScope.launch(Dispatchers.IO) {
             repo.updateMovie(movie)
         }
+    }
+
+    private val _uri = MutableLiveData<Uri>()
+    val uri: LiveData<Uri>
+        get() = _uri
+
+
+    fun makeUri(title:String) {
+        val formattedTitle = title.replace("[-,:. ]".toRegex(), "+")
+        _uri.value = Uri.parse("https://www.youtube.com/results?search_query=${formattedTitle}+trailer")
     }
 
 }
