@@ -19,12 +19,12 @@
     <string name="home_menu">Home</string>
     <string name="watchedFilms_menu">Watched</string>
     <string name="favorites_menu">Favorites</string>
-    <string name="btn_trailer_text">Trailer!</string>
+    <string name="btn_trailer_text">Trailer</string>
     <string name="next_page_btn">Next page</string>
     <string name="back_page_btn">Back page</string>
     <string name="page_number">1</string>
-    <string name="home_query_hint">Search in global DB...</string>
-    <string name="favorite_query_hint">Search in this list...</string>
+    <string name="home_query_hint">Search in global DB…</string>
+    <string name="favorite_query_hint">Search in this list…</string>
     <string name="example_chip_text">Popular</string>
     <string name="top_rated_chip_text">Top rated</string>
     <string name="upcoming_chip_text">Upcoming</string>

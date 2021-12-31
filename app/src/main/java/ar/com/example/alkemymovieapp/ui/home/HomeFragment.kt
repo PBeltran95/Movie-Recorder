@@ -10,11 +10,14 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ar.com.example.alkemymovieapp.R
+import ar.com.example.alkemymovieapp.application.AppConstants.NOW_PLAYING_MOVIES
+import ar.com.example.alkemymovieapp.application.AppConstants.POPULAR_MOVIES
+import ar.com.example.alkemymovieapp.application.AppConstants.TOP_RATED_MOVIES
+import ar.com.example.alkemymovieapp.application.AppConstants.UPCOMING_MOVIES
 import ar.com.example.alkemymovieapp.application.handleApiError
 import ar.com.example.alkemymovieapp.application.toast
 import ar.com.example.alkemymovieapp.core.Resource
@@ -34,8 +37,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     private val myAdapter by lazy { HomeAdapter(this@HomeFragment) }
     private var commonListOfMovies: MutableList<Movie> = mutableListOf()
     private var myListToFilter: MutableList<Movie> = mutableListOf()
-    var page = 1
-    var movieFilter = "movie/popular"
+    private var page = 1
+    private var movieFilter = POPULAR_MOVIES
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,26 +83,26 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
             fetchMovies(page, movieFilter)
         }
 
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.chipGroup.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId){
                 R.id.popular_chip -> {
-                    movieFilter = "movie/popular"
+                    movieFilter = POPULAR_MOVIES
                 }
                 R.id.playing_chip -> {
-                    movieFilter = "movie/now_playing"
+                    movieFilter = NOW_PLAYING_MOVIES
                 }
                 R.id.top_rated_chip -> {
-                    movieFilter = "movie/top_rated"
+                    movieFilter = TOP_RATED_MOVIES
                 }
                 R.id.upcoming_chip -> {
-                    movieFilter = "movie/upcoming"
+                    movieFilter = UPCOMING_MOVIES
                 }
             }
         }
     }
 
     private fun fetchMovies(page: Int, movieFilter: String) {
-        viewModel.fetchMovies(page, movieFilter).observe(viewLifecycleOwner, Observer {
+        viewModel.fetchMovies(page, movieFilter).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
                     binding.progressBar.isVisible = true
@@ -124,7 +127,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                     handleApiError(it)
                 }
             }
-        })
+        }
     }
 
     override fun onMovieClick(movie: Movie) {
@@ -254,8 +257,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     }
 
     private fun drawEmptyListError() {
-        viewModel.noMatchesForQuery.observe(viewLifecycleOwner, Observer {
+        viewModel.noMatchesForQuery.observe(viewLifecycleOwner) {
             binding.errorMessageAnim.isVisible = it
-        })
+        }
     }
 }
