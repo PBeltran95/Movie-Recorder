@@ -51,7 +51,6 @@ class WatchedFragment : Fragment(R.layout.fragment_watched), MovieAdapter.OnClic
 
     private fun setupSizes() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // landscape
             binding.rvFavorites.layoutManager = object : GridLayoutManager(requireContext(), 6) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
@@ -62,11 +61,10 @@ class WatchedFragment : Fragment(R.layout.fragment_watched), MovieAdapter.OnClic
                 }
             }
         } else {
-            // portrait
-            binding.rvFavorites.layoutManager = object : GridLayoutManager(requireContext(), 2) {
+            binding.rvFavorites.layoutManager = object : GridLayoutManager(requireContext(), 4) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
-                    lp.width = width / 2
-                    lp.height = height / 2
+                    lp.width = width / 4
+                    lp.height = height / 3
                     return true
                 }
             }
