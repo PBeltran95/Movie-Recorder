@@ -189,7 +189,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
             binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 6) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
-                    lp.height = ((height / 3) * 2)
+                    lp.height = ((height / 3) * 4)
                     lp.width = width / 6
 
                     return true

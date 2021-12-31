@@ -25,7 +25,6 @@
         android:id="@+id/rv_favorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/common_min_padding_margin"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
         tools:listitem="@layout/movie_item"/>

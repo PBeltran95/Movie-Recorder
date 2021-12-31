@@ -70,7 +70,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layoutAnimation="@anim/recyclerview_anim"
-        android:padding="@dimen/common_min_padding_margin"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
