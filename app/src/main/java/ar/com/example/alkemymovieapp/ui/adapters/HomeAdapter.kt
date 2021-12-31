@@ -1,4 +1,4 @@
-package ar.com.example.alkemymovieapp.ui.home
+package ar.com.example.alkemymovieapp.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

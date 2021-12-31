@@ -14,10 +14,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) : ViewModel() {
 
-    fun fetchMovies(page:Int) = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+    fun fetchMovies(page:Int, movieFilter: String) = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
         emit(Resource.Loading())
         try {
-            emit(Resource.Success(repo.getPopularMovies(page)))
+            emit(Resource.Success(repo.getPopularMovies(page, movieFilter)))
         } catch (e: Throwable) {
             when (e) {
                 is HttpException -> {
@@ -91,6 +91,25 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
     fun makeUri(title:String) {
         val formattedTitle = title.replace("[-,:. ]".toRegex(), "+")
         _uri.value = Uri.parse("https://www.youtube.com/results?search_query=${formattedTitle}+trailer")
+    }
+
+    private val _pageNumber = MutableLiveData(1)
+    val pageNumber: LiveData<Int>
+        get() = _pageNumber
+
+    fun incrementPage() {
+        _pageNumber.value = _pageNumber.value?.plus(1)
+    }
+    fun decrementPage() {
+        if (_pageNumber.value == 0){
+            _pageNumber.value = 1
+        }else {
+            _pageNumber.value = _pageNumber.value?.minus(1)
+        }
+    }
+
+    fun resetPageValue() {
+        _pageNumber.value = 1
     }
 
 }

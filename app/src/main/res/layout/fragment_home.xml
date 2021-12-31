@@ -20,18 +20,59 @@
             android:indeterminate="true" />
     </RelativeLayout>
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_min_padding_margin"
+        android:padding="@dimen/common_min_padding_margin"
+        app:singleSelection="true"
+        app:checkedChip="@id/popular_chip"
+        app:selectionRequired="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/popular_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/example_chip_text"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/top_rated_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/top_rated_chip_text"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/upcoming_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/upcoming_chip_text"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/playing_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="@string/latest_chip_text"/>
+
+
+    </com.google.android.material.chip.ChipGroup>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layoutAnimation="@anim/recyclerview_anim"
         android:padding="@dimen/common_min_padding_margin"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group"
         app:spanCount="3"
         tools:listitem="@layout/movie_item" />
 

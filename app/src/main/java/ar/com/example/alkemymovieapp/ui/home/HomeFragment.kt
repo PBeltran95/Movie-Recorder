@@ -21,6 +21,7 @@ import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.Movie
 import ar.com.example.alkemymovieapp.databinding.FragmentHomeBinding
 import ar.com.example.alkemymovieapp.presentation.MovieViewModel
+import ar.com.example.alkemymovieapp.ui.adapters.HomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -34,6 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     private var commonListOfMovies: MutableList<Movie> = mutableListOf()
     private var myListToFilter: MutableList<Movie> = mutableListOf()
     var page = 1
+    var movieFilter = "movie/popular"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +46,60 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-        fetchMovies(page)
+        setupPage()
+        fetchMovies(page, movieFilter)
         drawEmptyListError()
+        setupChips()
     }
 
-    private fun fetchMovies(page: Int) {
-        viewModel.fetchMovies(page).observe(viewLifecycleOwner, Observer {
+    private fun setupPage() {
+        viewModel.pageNumber.observe(viewLifecycleOwner){
+            page = it
+        }
+    }
+
+    private fun setupChips() {
+        binding.popularChip.setOnClickListener {
+            viewModel.resetPageValue()
+            requireActivity().invalidateOptionsMenu()
+            fetchMovies(page, movieFilter)
+        }
+        binding.playingChip.setOnClickListener {
+            viewModel.resetPageValue()
+            requireActivity().invalidateOptionsMenu()
+            fetchMovies(page, movieFilter)
+        }
+        binding.topRatedChip.setOnClickListener {
+            viewModel.resetPageValue()
+            requireActivity().invalidateOptionsMenu()
+            fetchMovies(page, movieFilter)
+        }
+        binding.upcomingChip.setOnClickListener {
+            viewModel.resetPageValue()
+            requireActivity().invalidateOptionsMenu()
+            fetchMovies(page, movieFilter)
+        }
+
+        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.popular_chip -> {
+                    movieFilter = "movie/popular"
+                }
+                R.id.playing_chip -> {
+                    movieFilter = "movie/now_playing"
+                }
+                R.id.top_rated_chip -> {
+                    movieFilter = "movie/top_rated"
+                }
+                R.id.upcoming_chip -> {
+                    movieFilter = "movie/upcoming"
+                }
+            }
+        }
+    }
+
+    private fun fetchMovies(page: Int, movieFilter: String) {
+        viewModel.fetchMovies(page, movieFilter).observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Loading -> {
                     binding.progressBar.isVisible = true
@@ -106,15 +156,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.btn_next -> {
-                page++
+                viewModel.incrementPage()
                 requireActivity().invalidateOptionsMenu()
-                fetchMovies(page)
+                fetchMovies(page, movieFilter)
                 lastPageAdvice()
             }
             R.id.btn_back -> {
-                page--
+                viewModel.decrementPage()
                 requireActivity().invalidateOptionsMenu()
-                fetchMovies(page)
+                fetchMovies(page, movieFilter)
                 lastPageAdvice()
             }
         }
@@ -145,7 +195,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         } else {
             binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 3) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
-                    lp.height = height / 3
+                    lp.height = ((height / 3) * 3) / 2
                     return true
                 }
             }
@@ -156,12 +206,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         when (page) {
             0 -> {
                 page = 1
-                fetchMovies(page)
+                fetchMovies(page, movieFilter)
             }
             1000 -> toast(requireContext(), getString(R.string.last_page))
             1001 -> {
                 page = 1
-                fetchMovies(page)
+                fetchMovies(page, movieFilter)
             }
         }
     }
