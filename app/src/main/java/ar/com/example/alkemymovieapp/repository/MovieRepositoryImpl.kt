@@ -1,7 +1,9 @@
 package ar.com.example.alkemymovieapp.repository
 
 import ar.com.example.alkemymovieapp.data.local.LocalMovieDataSource
-import ar.com.example.alkemymovieapp.data.models.*
+import ar.com.example.alkemymovieapp.data.models.MovieEntity
+import ar.com.example.alkemymovieapp.data.models.MovieList
+import ar.com.example.alkemymovieapp.data.models.toMovieEntity
 import ar.com.example.alkemymovieapp.data.remote.RemoteMovieDataSource
 import javax.inject.Inject
 
@@ -31,6 +33,10 @@ class MovieRepositoryImpl @Inject constructor (private val remoteDataSourceRemot
 
     override suspend fun saveFavoriteMovie(favoriteMovie: MovieEntity) {
         localDataSource.saveMovie(favoriteMovie)
+    }
+
+    override suspend fun updateMovie(movie: MovieEntity) {
+        localDataSource.updateMovie(movie)
     }
 
 

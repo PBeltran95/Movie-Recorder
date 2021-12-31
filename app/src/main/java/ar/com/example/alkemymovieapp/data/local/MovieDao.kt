@@ -19,5 +19,11 @@ interface MovieDao {
     @Query("SELECT * FROM movieentity WHERE isFavorite = 1")
     suspend fun getAllFavorites(): List<MovieEntity>
 
+    @Update
+    suspend fun updateMovie(movie:MovieEntity)
+
+    @Query("SELECT * FROM movieentity WHERE viewed = 1")
+    fun getAllViewed(): List<MovieEntity>
+
 
 }

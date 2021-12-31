@@ -2,7 +2,6 @@ package ar.com.example.alkemymovieapp.presentation
 
 import androidx.lifecycle.*
 import ar.com.example.alkemymovieapp.core.Resource
-import ar.com.example.alkemymovieapp.data.models.Movie
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,8 +28,24 @@ class LocalViewModel @Inject constructor (private val repo: LocalMovieRepo): Vie
         }
     }
 
+    fun fetchViewedMovies() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(repo.getViewedMovies()))
+        }catch (e:Throwable){
+            when (e) {
+                is HttpException -> {
+                    emit(Resource.Failure(false, e.code(), e.response()?.errorBody()))
+                }
+                else -> {
+                    emit(Resource.Failure(true, null, null))
+                }
+            }
+        }
+    }
+
     private var _listSaved = MutableLiveData<List<MovieEntity>>()
-    val listTofilter: LiveData<List<MovieEntity>>
+    val listToFilter: LiveData<List<MovieEntity>>
         get() = _listSaved
     private var _noMatchesForQuery = MutableLiveData<Boolean>()
     val noMatchesForQuery: LiveData<Boolean>

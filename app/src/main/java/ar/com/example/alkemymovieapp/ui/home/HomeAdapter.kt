@@ -1,8 +1,6 @@
 package ar.com.example.alkemymovieapp.ui.home
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,7 @@ import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.setGlide
 import ar.com.example.alkemymovieapp.data.models.Movie
 import ar.com.example.alkemymovieapp.databinding.MovieItemBinding
-import com.bumptech.glide.Glide
+import ar.com.example.alkemymovieapp.ui.utils.DiffUtils
 
 class HomeAdapter(
     private val itemClickListener: OnMovieClickListener

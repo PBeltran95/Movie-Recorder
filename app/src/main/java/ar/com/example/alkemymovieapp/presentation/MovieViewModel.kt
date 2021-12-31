@@ -70,9 +70,15 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
         _noMatchesForQuery.value = empty
     }
 
-    fun saveFavoriteMovie(favoriteMovie: MovieEntity){
+    fun updateFavoriteMovie(favoriteMovie: MovieEntity){
         viewModelScope.launch(Dispatchers.IO){
-            repo.saveFavoriteMovie(favoriteMovie)
+            repo.updateMovie(favoriteMovie)
+        }
+    }
+
+    fun updateViewedMovie(movie: MovieEntity){
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.updateMovie(movie)
         }
     }
 

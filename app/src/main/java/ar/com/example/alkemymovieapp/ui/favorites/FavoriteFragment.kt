@@ -16,13 +16,14 @@ import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.FragmentFavoriteBinding
 import ar.com.example.alkemymovieapp.presentation.LocalViewModel
+import ar.com.example.alkemymovieapp.ui.adapters.MovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.OnClick, SearchView.OnQueryTextListener {
+class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnClick, SearchView.OnQueryTextListener {
 
     private lateinit var binding: FragmentFavoriteBinding
-    private val adapter by lazy { FavoriteAdapter(this) }
+    private val adapter by lazy { MovieAdapter(this) }
     private val viewModel by viewModels<LocalViewModel>()
     private var commonListOfMovies: MutableList<MovieEntity> = mutableListOf()
     private var myListToFilter: MutableList<MovieEntity> = mutableListOf()
@@ -58,7 +59,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.O
             }
         }
 
-        viewModel.listTofilter.observe(viewLifecycleOwner) { filteredList ->
+        viewModel.listToFilter.observe(viewLifecycleOwner) { filteredList ->
             modifyData(filteredList.toMutableList())
         }
         viewModel.noMatchesForQuery.observe(viewLifecycleOwner) {
@@ -68,7 +69,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.O
 
     private fun setupRecyclerView(data: List<MovieEntity>) {
         binding.rvFavorites.adapter = adapter
-        adapter.setFavoriteData(data)
+        adapter.setMovieData(data)
         setupSizes()
     }
 
@@ -106,7 +107,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.O
         }
     }
 
-    override fun onFavoriteClick(movieEntity: MovieEntity) {
+    override fun onMovieClick(movieEntity: MovieEntity) {
         val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(movieEntity.id)
         findNavController().navigate(action)
     }
@@ -136,6 +137,6 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), FavoriteAdapter.O
     }
 
     private fun modifyData(data: MutableList<MovieEntity>) {
-        adapter.setFavoriteData(data)
+        adapter.setMovieData(data)
     }
 }

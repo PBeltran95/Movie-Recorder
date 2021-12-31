@@ -32,7 +32,11 @@
         android:id="@+id/watchedFragment"
         android:name="ar.com.example.alkemymovieapp.ui.watched.WatchedFragment"
         android:label="fragment_watched"
-        tools:layout="@layout/fragment_watched" />
+        tools:layout="@layout/fragment_watched" >
+        <action
+            android:id="@+id/action_watchedFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="ar.com.example.alkemymovieapp.ui.favorites.FavoriteFragment"

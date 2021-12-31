@@ -12,4 +12,8 @@ class LocalMovieDataSource @Inject constructor (private val movieDao: MovieDao) 
     suspend fun saveMovie(movie:MovieEntity){
         movieDao.saveMovie(movie)
     }
+
+    suspend fun updateMovie(movie:MovieEntity){
+        movieDao.updateMovie(movie)
+    }
 }

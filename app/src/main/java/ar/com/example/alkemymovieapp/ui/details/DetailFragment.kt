@@ -4,19 +4,19 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import ar.com.example.alkemymovieapp.R
-import ar.com.example.alkemymovieapp.application.*
-import ar.com.example.alkemymovieapp.core.*
+import ar.com.example.alkemymovieapp.application.handleApiError
+import ar.com.example.alkemymovieapp.application.setGlide
+import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.FragmentDetailBinding
 import ar.com.example.alkemymovieapp.presentation.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.reflect.typeOf
 
 @AndroidEntryPoint
 class DetailFragment : Fragment(R.layout.fragment_detail) {
@@ -38,22 +38,27 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         with(binding) {
             cvFavorite.setOnCheckedChangeListener { compoundButton, b ->
                 if (compoundButton.isChecked) {
-                    saveFavorite()
-                } else deleteFavorite()
+                    saveOrDeleteFavorite(true)
+                } else saveOrDeleteFavorite(false)
+            }
+            cvViewed.setOnCheckedChangeListener { compoundButton, b ->
+                if (compoundButton.isChecked){
+                    saveOrDeleteViewed(true)
+                }else saveOrDeleteViewed(false)
             }
         }
     }
 
-
-    private fun deleteFavorite() {
-        viewModel.saveFavoriteMovie(favoriteMovie.also {
-            it.isFavorite = false
+    private fun saveOrDeleteViewed(viewed: Boolean) {
+        viewModel.updateViewedMovie(favoriteMovie.also {
+            it.viewed = viewed
         })
     }
 
-    private fun saveFavorite() {
-        viewModel.saveFavoriteMovie(favoriteMovie.also {
-            it.isFavorite = true
+    private fun saveOrDeleteFavorite(isFavorite: Boolean) {
+        viewModel.updateFavoriteMovie(favoriteMovie.also {
+            it.isFavorite = isFavorite
+            it.viewed = true
         })
     }
 
@@ -110,6 +115,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             tvPopularity.text = getString(R.string.movie_popularity, data.popularity.toString())
             tvDescriptionDetails.text = data.overview
             cvFavorite.isChecked = data.isFavorite
+            cvViewed.isChecked = data.viewed
 
             btnTrailer.setOnClickListener {
                 setTrailerIntent(data.title)
@@ -140,6 +146,5 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val formattedTitle = title.replace("[-,:. ]".toRegex(), "+")
         return Uri.parse("https://www.youtube.com/results?search_query=${formattedTitle}+trailer")
     }
-
 
 }

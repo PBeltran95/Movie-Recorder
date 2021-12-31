@@ -1,6 +1,7 @@
 package ar.com.example.alkemymovieapp.repository
 
-import ar.com.example.alkemymovieapp.data.models.*
+import ar.com.example.alkemymovieapp.data.models.MovieEntity
+import ar.com.example.alkemymovieapp.data.models.MovieList
 
 interface MovieRepository {
 
@@ -11,4 +12,6 @@ interface MovieRepository {
     suspend fun searchMovieByTitle(movieTitle:String): MovieList
 
     suspend fun saveFavoriteMovie(favoriteMovie: MovieEntity)
+
+    suspend fun updateMovie(movie: MovieEntity)
 }

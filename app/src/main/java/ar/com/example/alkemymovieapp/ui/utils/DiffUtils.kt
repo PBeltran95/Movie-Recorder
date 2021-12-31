@@ -1,4 +1,4 @@
-package ar.com.example.alkemymovieapp.ui.home
+package ar.com.example.alkemymovieapp.ui.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import ar.com.example.alkemymovieapp.data.models.Movie

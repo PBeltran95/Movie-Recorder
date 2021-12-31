@@ -42,6 +42,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cv_viewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_padding_margin"
+            android:button="@drawable/viewed_button_states"
+            android:buttonTint="@color/white"
+            app:layout_constraintStart_toStartOf="@id/img_movie"
+            app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_movie"
         android:layout_width="0dp"
