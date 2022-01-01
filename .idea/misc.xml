@@ -6,6 +6,7 @@
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/bottom_selector.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/favorite_button_states.xml" value="0.3611111111111111" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/gradient.xml" value="0.3828125" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/house_states.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/ic_add_to_view.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/ic_baseline_bookmark.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.3828125" />
@@ -13,6 +14,7 @@
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/ic_baseline_star.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/ic_viewed.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/viewed_button_states.xml" value="0.3828125" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/watched_states.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout-sw320dp-land/movie_item.xml" value="0.25" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout-sw480dp-land/movie_item.xml" value="0.255859375" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout-sw600dp-land/fragment_home.xml" value="0.409375" />
