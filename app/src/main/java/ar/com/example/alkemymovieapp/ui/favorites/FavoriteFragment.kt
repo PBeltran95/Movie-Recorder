@@ -39,6 +39,13 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoriteBinding.bind(view)
         setupObservers()
+        showError()
+    }
+
+    private fun showError() {
+        viewModel.isEmpty.observe(viewLifecycleOwner){
+            binding.favoritesEmpty.isVisible = it
+        }
     }
 
     private fun setupObservers() {
@@ -57,7 +64,8 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
                         clear()
                         addAll(movieList)
                     }
-                    setupRecyclerView(it.data)
+                    viewModel.verifyList(movieList)
+                    setupRecyclerView(movieList)
                 }
                 is Resource.Failure ->{
                     handleApiError(it)
@@ -82,9 +90,12 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
 
     private fun setupRecyclerView(data: List<MovieEntity>) {
         with(binding){
-            progressBar.isVisible = false
-            rvFavorites.isVisible = true
-            rvFavorites.adapter = adapter
+            if (data.isNotEmpty()){
+                favoritesEmpty.isVisible = false
+                progressBar.isVisible = false
+                rvFavorites.isVisible = true
+                rvFavorites.adapter = adapter
+            }
         }
         adapter.setMovieData(data)
         setupSizes()
@@ -131,9 +142,11 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query!!.isNotEmpty()) {
+            binding.favoritesEmpty.isVisible = false
             filterList(query)
         } else {
             binding.errorMessageAnim.isVisible = false
+            showError()
             modifyData(commonListOfMovies)
         }
         return false
@@ -141,9 +154,11 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
 
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText!!.isNotEmpty()) {
+            binding.favoritesEmpty.isVisible = false
             filterList(newText)
         } else {
             binding.errorMessageAnim.isVisible = false
+            showError()
             modifyData(commonListOfMovies)
         }
         return true

@@ -3,6 +3,7 @@ package ar.com.example.alkemymovieapp.ui.watched
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,6 +29,12 @@ class WatchedFragment : Fragment(R.layout.fragment_watched), MovieAdapter.OnClic
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentWatchedBinding.bind(view)
         setupObservers()
+        showError()
+    }
+    private fun showError() {
+        viewModel.isEmpty.observe(viewLifecycleOwner){
+            binding.watchedEmpty.isVisible = it
+        }
     }
 
     private fun setupObservers() {
@@ -36,6 +43,7 @@ class WatchedFragment : Fragment(R.layout.fragment_watched), MovieAdapter.OnClic
                 is Resource.Loading ->{}
                 is Resource.Success ->{
                     val movieList = it.data
+                    viewModel.verifyList(movieList)
                     setupRecyclerView(movieList)
                 }
                 is Resource.Failure ->{}

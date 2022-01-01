@@ -14,4 +14,13 @@
         app:spanCount="3"
         tools:listitem="@layout/movie_item"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/watched_empty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/astronaut"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

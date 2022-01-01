@@ -62,4 +62,13 @@ class LocalViewModel @Inject constructor (private val repo: LocalMovieRepo): Vie
         _noMatchesForQuery.value = data.isEmpty()
         _listSaved.value = data
     }
+
+
+    private var _isEmpty = MutableLiveData<Boolean>()
+    val isEmpty: LiveData<Boolean>
+        get() = _isEmpty
+
+    fun verifyList(movieList: List<MovieEntity>) {
+        _isEmpty.value = movieList.isEmpty()
+    }
 }
