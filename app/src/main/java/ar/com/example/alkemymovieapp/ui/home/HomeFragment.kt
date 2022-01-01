@@ -63,24 +63,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private fun setupChips() {
         binding.popularChip.setOnClickListener {
-            viewModel.resetPageValue()
-            requireActivity().invalidateOptionsMenu()
-            fetchMovies(page, movieFilter)
+            chipClickAction()
         }
         binding.playingChip.setOnClickListener {
-            viewModel.resetPageValue()
-            requireActivity().invalidateOptionsMenu()
-            fetchMovies(page, movieFilter)
+            chipClickAction()
         }
         binding.topRatedChip.setOnClickListener {
-            viewModel.resetPageValue()
-            requireActivity().invalidateOptionsMenu()
-            fetchMovies(page, movieFilter)
+            chipClickAction()
         }
         binding.upcomingChip.setOnClickListener {
-            viewModel.resetPageValue()
-            requireActivity().invalidateOptionsMenu()
-            fetchMovies(page, movieFilter)
+            chipClickAction()
         }
 
         binding.chipGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -99,6 +91,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 }
             }
         }
+    }
+
+    private fun chipClickAction() {
+        viewModel.resetPageValue()
+        requireActivity().invalidateOptionsMenu()
+        fetchMovies(page, movieFilter)
     }
 
     private fun fetchMovies(page: Int, movieFilter: String) {
@@ -246,12 +244,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     private fun drawFiltrated(query: String?) {
         viewModel.searchMovieByTitle(query!!).observe(viewLifecycleOwner){
             when(it){
-                is Resource.Loading -> {}
                 is Resource.Success -> {
                     viewModel.evaluateListOfResults(it.data.results.isEmpty())
                     modifyData(it.data.results.toMutableList())
                 }
-                is Resource.Failure -> {}
+                else -> {}
             }
         }
     }
