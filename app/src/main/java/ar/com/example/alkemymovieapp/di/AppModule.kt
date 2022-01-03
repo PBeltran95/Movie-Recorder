@@ -3,10 +3,11 @@ package ar.com.example.alkemymovieapp.di
 import android.content.Context
 import androidx.room.Room
 import ar.com.example.alkemymovieapp.BuildConfig
-import ar.com.example.alkemymovieapp.application.AppConstants
 import ar.com.example.alkemymovieapp.core.WebService
 import ar.com.example.alkemymovieapp.data.local.AppDatabase
 import ar.com.example.alkemymovieapp.data.local.MovieDao
+import ar.com.example.alkemymovieapp.repository.MovieTrailerRepository
+import ar.com.example.alkemymovieapp.repository.MovieTrailerRepositoryImpl
 import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepo
 import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepoImpl
 import com.google.gson.GsonBuilder
@@ -52,6 +53,11 @@ object AppModule {
     @Provides
     fun providesLocalMovieRepoImpl(dao: MovieDao) : LocalMovieRepo {
         return LocalMovieRepoImpl(dao)
+    }
+
+    @Provides
+    fun providesMovieTrailerRepoImpl(webService: WebService): MovieTrailerRepository {
+        return MovieTrailerRepositoryImpl(webService)
     }
 
 }

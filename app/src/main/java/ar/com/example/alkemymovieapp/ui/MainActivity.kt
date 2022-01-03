@@ -1,10 +1,9 @@
 package ar.com.example.alkemymovieapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import ar.com.example.alkemymovieapp.R
@@ -28,8 +27,18 @@ class MainActivity : AppCompatActivity() {
     private fun hideBottomNavBar() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
-                R.id.detailFragment -> binding.bottomNavigationBar.isVisible = false
-                else -> binding.bottomNavigationBar.isVisible = true
+                R.id.detailFragment -> {
+                    binding.bottomNavigationBar.isVisible = false
+                    supportActionBar?.show()
+                }
+                R.id.trailerFragment -> {
+                    binding.bottomNavigationBar.isVisible = false
+                    supportActionBar?.hide()
+                }
+                else -> {
+                    binding.bottomNavigationBar.isVisible = true
+                    supportActionBar?.show()
+                }
             }
         }
     }

@@ -27,6 +27,9 @@
             android:name="movieId"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_detailFragment_to_trailerFragment"
+            app:destination="@id/trailerFragment" />
     </fragment>
     <fragment
         android:id="@+id/watchedFragment"
@@ -66,5 +69,14 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/trailerFragment"
+        android:name="ar.com.example.alkemymovieapp.ui.trailer.TrailerFragment"
+        android:label="fragment_trailer"
+        tools:layout="@layout/fragment_trailer" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
     </fragment>
 </navigation>

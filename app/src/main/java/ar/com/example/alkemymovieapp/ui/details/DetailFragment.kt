@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ar.com.example.alkemymovieapp.R
 import ar.com.example.alkemymovieapp.application.handleApiError
@@ -135,7 +136,8 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             cvBookmark.isChecked = data.watchLater
 
             btnTrailer.setOnClickListener {
-                setTrailerIntent(data.title)
+                val action = DetailFragmentDirections.actionDetailFragmentToTrailerFragment(data.id)
+                findNavController().navigate(action)
             }
             btnShare.setOnClickListener {
                 shareData(data.title)

@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "ar.com.example.alkemymovieapp"
         minSdk 22
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -84,8 +84,8 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     //Lottie
     implementation "com.airbnb.android:lottie:4.2.0"
-    //Paging
-    implementation "androidx.paging:paging-runtime-ktx:3.0.1"
     //SwipeToRefresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    //YoutubePlayer
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
 }
