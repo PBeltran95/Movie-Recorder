@@ -3,8 +3,10 @@
 An app that you can find and save all your favorites films and create a ToDo list of movies to see!
 
 ## Features used:
-- Retrofit2
+- Retrofit2(with multiple endpoints)
 - Room
+- Chips
+- SearchView
 - Bottom Navigation View
 - Coroutines
 - MVVM
