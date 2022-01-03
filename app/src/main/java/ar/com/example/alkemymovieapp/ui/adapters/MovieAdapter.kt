@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ar.com.example.alkemymovieapp.R
@@ -42,6 +43,7 @@ class MovieAdapter(private val movieClick: OnClick): RecyclerView.Adapter<MovieA
             setGlide(context, item.poster_path, binding.imgMovie)
             binding.root.setOnClickListener { movieClick.onMovieClick(item) }
             binding.tvMovieTitle.text = item.title
+            binding.tvVotes.isVisible = false
         }
     }
 

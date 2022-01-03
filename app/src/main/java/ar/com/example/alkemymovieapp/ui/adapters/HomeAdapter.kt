@@ -44,6 +44,7 @@ class HomeAdapter(
                 itemClickListener.onMovieClick(movie)
             }
             setGlide(context,"https://image.tmdb.org/t/p/w500/${movie.poster_path}", binding.imgMovie )
+            binding.tvVotes.text = movie.vote_average.toString()
             binding.tvMovieTitle.text = movie.title
         }
     }
