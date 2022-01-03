@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/_85634_movie_film_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/bookmark_button_states.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/bottom_selector.xml" value="0.3828125" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/drawable/favorite_button_states.xml" value="0.3611111111111111" />
@@ -31,6 +33,8 @@
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout-sw720dp/fragment_detail.xml" value="0.8822055137844611" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout-sw720dp/movie_item.xml" value="0.34375" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout/activity_splash_main.xml" value="0.1" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout/chip_item.xml" value="0.33" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout/fragment_detail.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pablo/AndroidStudioProjects/AlkemyMovieApp/app/src/main/res/layout/fragment_favorite.xml" value="0.36102564102564105" />

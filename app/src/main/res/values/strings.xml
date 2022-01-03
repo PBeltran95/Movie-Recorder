@@ -31,4 +31,5 @@
     <string name="latest_chip_text">Playing</string>
     <string name="watch_later_text_bottom_bar">Watch Later</string>
     <string name="viewed_text">Viewed?</string>
+    <string name="logo_from_splash">Logo from splash</string>
 </resources>
