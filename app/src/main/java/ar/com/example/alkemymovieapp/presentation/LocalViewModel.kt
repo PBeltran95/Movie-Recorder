@@ -44,6 +44,22 @@ class LocalViewModel @Inject constructor (private val repo: LocalMovieRepo): Vie
         }
     }
 
+    fun fetchToView() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(repo.getAllToWatch()))
+        }catch (e:Throwable){
+            when (e) {
+                is HttpException -> {
+                    emit(Resource.Failure(false, e.code(), e.response()?.errorBody()))
+                }
+                else -> {
+                    emit(Resource.Failure(true, null, null))
+                }
+            }
+        }
+    }
+
     private var _listSaved = MutableLiveData<List<MovieEntity>>()
     val listToFilter: LiveData<List<MovieEntity>>
         get() = _listSaved

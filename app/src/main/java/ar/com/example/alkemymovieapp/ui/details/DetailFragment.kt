@@ -51,17 +51,28 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                     saveOrDeleteViewed(true)
                 }else saveOrDeleteViewed(false)
             }
+            cvBookmark.setOnCheckedChangeListener { compoundButton, b ->
+                if (compoundButton.isChecked){
+                    saveOrDeleteToWatch(true)
+                }else saveOrDeleteToWatch(false)
+            }
         }
     }
 
+    private fun saveOrDeleteToWatch(toWatch: Boolean) {
+        viewModel.updateMovie(favoriteMovie.also {
+            it.watchLater = toWatch
+        })
+    }
+
     private fun saveOrDeleteViewed(viewed: Boolean) {
-        viewModel.updateViewedMovie(favoriteMovie.also {
+        viewModel.updateMovie(favoriteMovie.also {
             it.viewed = viewed
         })
     }
 
     private fun saveOrDeleteFavorite(isFavorite: Boolean) {
-        viewModel.updateFavoriteMovie(favoriteMovie.also {
+        viewModel.updateMovie(favoriteMovie.also {
             it.isFavorite = isFavorite
             it.viewed = true
         })
@@ -121,6 +132,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             tvDescriptionDetails.text = data.overview
             cvFavorite.isChecked = data.isFavorite
             cvViewed.isChecked = data.viewed
+            cvBookmark.isChecked = data.watchLater
 
             btnTrailer.setOnClickListener {
                 setTrailerIntent(data.title)

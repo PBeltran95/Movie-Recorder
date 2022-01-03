@@ -29,4 +29,6 @@
     <string name="top_rated_chip_text">Top rated</string>
     <string name="upcoming_chip_text">Upcoming</string>
     <string name="latest_chip_text">Playing</string>
+    <string name="watch_later_text_bottom_bar">Watch Later</string>
+    <string name="viewed_text">Viewed?</string>
 </resources>

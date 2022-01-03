@@ -10,4 +10,6 @@ class LocalMovieRepoImpl @Inject constructor(private val movieDao: MovieDao) : L
 
     override suspend fun getViewedMovies(): List<MovieEntity> = movieDao.getAllViewed()
 
+    override suspend fun getAllToWatch(): List<MovieEntity> = movieDao.getAllToWatch()
+
 }

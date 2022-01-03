@@ -7,4 +7,6 @@ interface LocalMovieRepo {
     suspend fun getFavoriteMovies():List<MovieEntity>
 
     suspend fun getViewedMovies(): List<MovieEntity>
+
+    suspend fun getAllToWatch(): List<MovieEntity>
 }

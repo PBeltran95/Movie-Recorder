@@ -47,9 +47,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_padding_margin"
-            android:button="@drawable/viewed_button_states"
+            android:button="@drawable/viewed_states"
             android:buttonTint="@color/white"
             app:layout_constraintStart_toStartOf="@id/img_movie"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_viewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_min_padding_margin"
+            style="@style/textInBackground"
+            android:text="@string/viewed_text"
+            app:layout_constraintStart_toStartOf="@id/img_movie"
+            app:layout_constraintTop_toBottomOf="@id/cv_viewed"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cv_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_padding_margin"
+            android:layout_marginEnd="@dimen/common_padding_margin"
+            android:button="@drawable/bookmark_button_states"
+            android:buttonTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.imageview.ShapeableImageView

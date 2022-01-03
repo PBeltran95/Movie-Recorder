@@ -23,7 +23,9 @@ interface MovieDao {
     suspend fun updateMovie(movie:MovieEntity)
 
     @Query("SELECT * FROM movieentity WHERE viewed = 1")
-    fun getAllViewed(): List<MovieEntity>
+    suspend fun getAllViewed(): List<MovieEntity>
 
+    @Query("SELECT * FROM movieentity WHERE watchLater = 1")
+    suspend fun getAllToWatch(): List<MovieEntity>
 
 }

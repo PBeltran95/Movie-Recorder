@@ -13,5 +13,9 @@
         android:id="@+id/favoriteFragment"
         android:title="@string/favorites_menu"
         android:icon="@drawable/favorite_button_states"/>
+    <item
+        android:id="@+id/toWatchFragment"
+        android:title="@string/watch_later_text_bottom_bar"
+        android:icon="@drawable/bookmark_button_states"/>
 
 </menu>

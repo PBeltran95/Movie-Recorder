@@ -44,6 +44,9 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
 
     private fun showError() {
         viewModel.isEmpty.observe(viewLifecycleOwner){
+            if (it){
+                binding.progressBar.isVisible = false
+            }
             binding.favoritesEmpty.isVisible = it
         }
     }

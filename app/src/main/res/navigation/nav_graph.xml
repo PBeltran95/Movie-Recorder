@@ -54,4 +54,17 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
+    <fragment
+        android:id="@+id/toWatchFragment"
+        android:name="ar.com.example.alkemymovieapp.ui.bookmark.ToWatchFragment"
+        android:label="fragment_to_watch"
+        tools:layout="@layout/fragment_to_watch" >
+        <action
+            android:id="@+id/action_toWatchFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
 </navigation>

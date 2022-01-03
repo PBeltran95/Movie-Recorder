@@ -19,7 +19,9 @@ data class Movie(
     val vote_average: Double = -1.0,
     val vote_count: Int = -1,
     var isFavorite: Boolean,
-    var viewed: Boolean = false
+    var viewed: Boolean = false,
+    var watchLater: Boolean = false
+
 )
 
 
@@ -43,7 +45,8 @@ data class MovieDetail(
     val vote_average: Double = -1.0,
     val vote_count: Int = -1,
     var isFavorite: Boolean,
-    var viewed: Boolean = false
+    var viewed: Boolean = false,
+    var watchLater: Boolean = false
 )
 data class Genres(
     val id:Int = -1,
@@ -69,7 +72,8 @@ data class MovieEntity(
     var vote_average: Double = 0.0,
     var vote_count: Int = 0,
     var isFavorite: Boolean = false,
-    var viewed: Boolean = false
+    var viewed: Boolean = false,
+    var watchLater: Boolean = false
 )
 
 fun MovieDetail.toMovieEntity():MovieEntity = MovieEntity(
@@ -88,7 +92,8 @@ fun MovieDetail.toMovieEntity():MovieEntity = MovieEntity(
     this.vote_average,
     this.vote_count,
     this.isFavorite,
-    this.viewed
+    this.viewed,
+    this.watchLater
 )
 fun MovieEntity.toMovie():Movie = Movie(
     this.id,
@@ -105,5 +110,6 @@ fun MovieEntity.toMovie():Movie = Movie(
     this.vote_average,
     this.vote_count,
     this.isFavorite,
-    this.viewed
+    this.viewed,
+    this.watchLater
 )
