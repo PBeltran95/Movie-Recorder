@@ -1,5 +1,7 @@
 package ar.com.example.alkemymovieapp.ui
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -24,20 +26,24 @@ class MainActivity : AppCompatActivity() {
         hideBottomNavBar()
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     private fun hideBottomNavBar() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
                 R.id.detailFragment -> {
                     binding.bottomNavigationBar.isVisible = false
                     supportActionBar?.show()
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 }
                 R.id.trailerFragment -> {
                     binding.bottomNavigationBar.isVisible = false
                     supportActionBar?.hide()
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                 }
                 else -> {
                     binding.bottomNavigationBar.isVisible = true
                     supportActionBar?.show()
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                 }
             }
         }
