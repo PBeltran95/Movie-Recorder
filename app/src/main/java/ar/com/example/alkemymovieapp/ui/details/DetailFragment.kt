@@ -143,7 +143,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 shareData(data.title)
             }
         }
-
     }
 
     private fun shareData(title: String) {
@@ -156,11 +155,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         startActivity(shareIntent)
     }
 
-    private fun setTrailerIntent(title: String) {
-        val trailerIntent = Intent(Intent.ACTION_VIEW, formatTitle(title))
-        startActivity(trailerIntent)
-    }
-
     private fun formatTitle(title: String): Uri {
         var url: Uri = Uri.EMPTY
         viewModel.makeUri(title)
@@ -169,5 +163,4 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
         return url
     }
-
 }

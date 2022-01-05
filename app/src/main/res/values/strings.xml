@@ -2,7 +2,7 @@
     <string name="app_name">MovieRecorder</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="description"><u>Description</u></string>
+    <string name="description">Description</string>
     <string name="rate_it">Rate it!</string>
     <string name="example_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -32,4 +32,5 @@
     <string name="watch_later_text_bottom_bar">Watch Later</string>
     <string name="viewed_text">Viewed?</string>
     <string name="logo_from_splash">Logo from splash</string>
+    <string name="btn_share_content_description">Button to share movie</string>
 </resources>

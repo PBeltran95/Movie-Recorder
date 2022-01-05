@@ -276,7 +276,8 @@
         app:layout_constraintBottom_toBottomOf="@id/btn_trailer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline_4"
-        app:layout_constraintTop_toTopOf="@id/btn_trailer" />
+        app:layout_constraintTop_toTopOf="@id/btn_trailer"
+        android:contentDescription="@string/btn_share_content_description" />
 
     <TextView
         android:id="@+id/tv_description"
@@ -286,30 +287,30 @@
         android:text="@string/description"
         android:textSize="20sp"
         android:textStyle="bold"
-
         app:autoSizeTextType="uniform"
         app:autoSizeMaxTextSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_6" />
 
-
-        <TextView
-            android:id="@+id/tv_description_details"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/common_padding_margin"
-            android:layout_marginStart="@dimen/common_padding_margin"
-            android:layout_marginEnd="@dimen/common_padding_margin"
-            android:layout_marginBottom="@dimen/common_padding_margin"
-            android:maxLines="4"
-            style="@style/textDescriptionAndGenre"
-            tools:text="@string/example_description"
-            app:layout_constraintVertical_bias="0.2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/common_padding_margin"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_description"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_description_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textDescriptionAndGenre"
+                tools:text="@string/example_description"/>
+        </androidx.core.widget.NestedScrollView>
+
+
 
 
         <androidx.constraintlayout.widget.Barrier
