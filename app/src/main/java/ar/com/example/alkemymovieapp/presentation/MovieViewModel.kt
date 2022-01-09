@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.*
 import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
+import ar.com.example.alkemymovieapp.managers.MakeUriManager
 import ar.com.example.alkemymovieapp.repository.MovieRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +13,7 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) : ViewModel() {
+class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl, private val uriManager: MakeUriManager) : ViewModel() {
 
     fun fetchMovies(page:Int, movieFilter: String) = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
         emit(Resource.Loading())
@@ -83,8 +84,7 @@ class MovieViewModel @Inject constructor(private val repo: MovieRepositoryImpl) 
 
 
     fun makeUri(title:String) {
-        val formattedTitle = title.replace("[-,:. ]".toRegex(), "+")
-        _uri.value = Uri.parse("https://www.youtube.com/results?search_query=${formattedTitle}+trailer")
+        _uri.value = uriManager.makeUri(title)
     }
 
     private val _pageNumber = MutableLiveData(1)

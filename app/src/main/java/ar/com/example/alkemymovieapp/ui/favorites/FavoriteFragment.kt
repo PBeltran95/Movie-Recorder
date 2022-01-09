@@ -120,7 +120,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
             binding.rvFavorites.layoutManager = object : GridLayoutManager(requireContext(), 3) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
-                    lp.height = height / 3
+                    lp.height = (height / 4) * 2
                     return true
                 }
             }

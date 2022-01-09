@@ -184,11 +184,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
 
     private fun setupSizes(){
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 6) {
+            binding.rvHome.layoutManager = object : GridLayoutManager(requireContext(), 5) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
 
                     lp.height = ((height / 3) * 4)
-                    lp.width = width / 6
+                    lp.width = width / 5
 
                     return true
                 }
