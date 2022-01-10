@@ -18,6 +18,7 @@ class MovieAdapter(private val movieClick: OnClick): RecyclerView.Adapter<MovieA
 
     interface OnClick{
         fun onMovieClick(movieEntity:MovieEntity)
+        fun onLongClick(movieEntity: MovieEntity)
     }
 
     private lateinit var context: Context
@@ -42,6 +43,10 @@ class MovieAdapter(private val movieClick: OnClick): RecyclerView.Adapter<MovieA
         with(holder){
             setGlide(context, item.poster_path, binding.imgMovie)
             binding.root.setOnClickListener { movieClick.onMovieClick(item) }
+            binding.root.setOnLongClickListener {
+                movieClick.onLongClick(item)
+                return@setOnLongClickListener true
+            }
             binding.tvMovieTitle.text = item.title
             binding.tvVotes.isVisible = false
         }

@@ -1,9 +1,7 @@
 package ar.com.example.alkemymovieapp.di
 
-import ar.com.example.alkemymovieapp.managers.MakeUriManager
-import ar.com.example.alkemymovieapp.managers.MakeUriManagerImpl
-import ar.com.example.alkemymovieapp.managers.SearchManager
-import ar.com.example.alkemymovieapp.managers.SearchMangerImpl
+import ar.com.example.alkemymovieapp.managers.*
+import ar.com.example.alkemymovieapp.repository.MovieRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +19,11 @@ object ManagersModule {
     @Provides
     fun providesSearchManager(): SearchManager {
         return SearchMangerImpl()
+    }
+
+    @Provides
+    fun providesUpdateManager(repo: MovieRepositoryImpl): UpdateManager {
+        return UpdateManagerImpl(repo)
     }
 
 
