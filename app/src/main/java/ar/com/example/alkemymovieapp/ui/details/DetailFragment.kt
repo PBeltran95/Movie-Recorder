@@ -43,34 +43,15 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun setButtons() {
         with(binding) {
             cvFavorite.setOnCheckedChangeListener { compoundButton, _ ->
-                saveOrDeleteFavorite(compoundButton.isChecked)
+                viewModel.saveOrDeleteFavorite(compoundButton.isChecked, favoriteMovie)
             }
             cvViewed.setOnCheckedChangeListener { compoundButton, _ ->
-                saveOrDeleteViewed(compoundButton.isChecked)
+                viewModel.saveOrDeleteViewed(compoundButton.isChecked, favoriteMovie)
             }
             cvBookmark.setOnCheckedChangeListener { compoundButton, _ ->
-                saveOrDeleteToWatch(compoundButton.isChecked)
+                viewModel.saveOrDeleteToWatch(compoundButton.isChecked, favoriteMovie)
             }
         }
-    }
-
-    private fun saveOrDeleteToWatch(toWatch: Boolean) {
-        viewModel.updateMovie(favoriteMovie.also {
-            it.watchLater = toWatch
-        })
-    }
-
-    private fun saveOrDeleteViewed(viewed: Boolean) {
-        viewModel.updateMovie(favoriteMovie.also {
-            it.viewed = viewed
-        })
-    }
-
-    private fun saveOrDeleteFavorite(isFavorite: Boolean) {
-        viewModel.updateMovie(favoriteMovie.also {
-            it.isFavorite = isFavorite
-            it.viewed = true
-        })
     }
 
     private fun fetchMovieDetails() {

@@ -24,7 +24,6 @@ class MovieRepositoryImpl @Inject constructor (private val remoteDataSourceRemot
             }
             localDataSource.getMovieDetails(movieId)
         }
-
     }
 
     override suspend fun searchMovieByTitle(movieTitle: String): MovieList =

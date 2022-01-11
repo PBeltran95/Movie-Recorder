@@ -26,5 +26,10 @@ object ManagersModule {
         return UpdateManagerImpl(repo)
     }
 
+    @Provides
+    fun providesRegisterManager(repo: MovieRepositoryImpl): RegisterManager {
+        return RegisterManagerImpl(repo)
+    }
+
 
 }
