@@ -29,7 +29,7 @@ An app that you can find and save all your favorites films and create a ToDo lis
 
 [![Alt text](https://i.ytimg.com/an_webp/OKaJxjH0ocs/mqdefault_6s.webp?du=3000&sqp=CLqs9Y4G&rs=AOn4CLBwyySVoDoc9V0XKAujzgRqnViSyg)](https://www.youtube.com/watch?v=OKaJxjH0ocs)
 
-[![Alt text](https://i1.wp.com/elrincondechina.com/wp-content/uploads/2020/09/google-play-store-logo-featured-erdc.jpg?fit=1024%2C500&ssl=1)](https://play.google.com/store/apps/details?id=ar.com.example.alkemymovieapp)
+[![Alt text](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png?hl=es-419)](https://play.google.com/store/apps/details?id=ar.com.example.alkemymovieapp)
 
 
 
