@@ -15,7 +15,7 @@ import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.FragmentWatchedBinding
 import ar.com.example.alkemymovieapp.presentation.LocalViewModel
 import ar.com.example.alkemymovieapp.ui.adapters.MovieAdapter
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import ar.com.example.alkemymovieapp.ui.utils.AlertUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -86,13 +86,6 @@ class WatchedFragment : Fragment(R.layout.fragment_watched), MovieAdapter.OnClic
     }
 
     override fun onLongClick(movieEntity: MovieEntity) {
-        MaterialAlertDialogBuilder(requireContext(), R.style.AppCompatAlertDialogStyle)
-            .setTitle("Do you want to delete this movie?")
-            .setNeutralButton("No") { dialog, witch -> }
-            .setPositiveButton("Delete") {dialog, witch ->
-                viewModel.deleteFromWatched(movieEntity)
-                setupObservers()
-            }
-            .show()
+        AlertUtil.makeAlert(requireContext(), { viewModel.deleteFromWatched(movieEntity) }, {setupObservers()})
     }
 }

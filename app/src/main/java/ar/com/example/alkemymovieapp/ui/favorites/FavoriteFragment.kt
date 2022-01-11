@@ -19,7 +19,7 @@ import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.databinding.FragmentFavoriteBinding
 import ar.com.example.alkemymovieapp.presentation.LocalViewModel
 import ar.com.example.alkemymovieapp.ui.adapters.MovieAdapter
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import ar.com.example.alkemymovieapp.ui.utils.AlertUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -145,14 +145,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
     }
 
     override fun onLongClick(movieEntity: MovieEntity) {
-        MaterialAlertDialogBuilder(requireContext(), R.style.AppCompatAlertDialogStyle)
-            .setTitle("Do you want to delete this movie?")
-            .setNeutralButton("No") { dialog, witch -> }
-            .setPositiveButton("Delete") {dialog, witch ->
-                viewModel.deleteFromFavorites(movieEntity)
-                setupObservers()
-            }
-            .show()
+        AlertUtil.makeAlert(requireContext(), { viewModel.deleteFromFavorites(movieEntity) }, {setupObservers()})
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

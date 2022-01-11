@@ -42,13 +42,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun setButtons() {
         with(binding) {
-            cvFavorite.setOnCheckedChangeListener { compoundButton, b ->
+            cvFavorite.setOnCheckedChangeListener { compoundButton, _ ->
                 saveOrDeleteFavorite(compoundButton.isChecked)
             }
-            cvViewed.setOnCheckedChangeListener { compoundButton, b ->
+            cvViewed.setOnCheckedChangeListener { compoundButton, _ ->
                 saveOrDeleteViewed(compoundButton.isChecked)
             }
-            cvBookmark.setOnCheckedChangeListener { compoundButton, b ->
+            cvBookmark.setOnCheckedChangeListener { compoundButton, _ ->
                 saveOrDeleteToWatch(compoundButton.isChecked)
             }
         }
