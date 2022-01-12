@@ -101,7 +101,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
     }
 
     private fun fetchMovies(page: Int, movieFilter: String) {
-        viewModel.fetchMovies(page, movieFilter).observe(viewLifecycleOwner) {
+        viewModel.fetchMovies(movieFilter, page).observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
                     binding.progressBar.isVisible = true
@@ -119,7 +119,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                         clear()
                         addAll(movieList)
                     }
-                    sendDataToAdapter(movieList)
+                    setupRecyclerView()
+                    modifyData(movieList.toMutableList())
                 }
                 is Resource.Failure -> {
                     binding.progressBar.isVisible = false
@@ -127,10 +128,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 }
             }
         }
-    }
-
-    private fun sendDataToAdapter(movieList: List<Movie>) {
-        myAdapter.setData(movieList.toMutableList())
     }
 
     override fun onMovieClick(movie: Movie) {

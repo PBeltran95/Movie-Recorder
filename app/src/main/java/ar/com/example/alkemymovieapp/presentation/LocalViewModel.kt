@@ -5,7 +5,7 @@ import ar.com.example.alkemymovieapp.core.Resource
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import ar.com.example.alkemymovieapp.managers.SearchManager
 import ar.com.example.alkemymovieapp.managers.UpdateManager
-import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepo
+import ar.com.example.alkemymovieapp.repository.local.LocalListRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class LocalViewModel @Inject constructor (private val repo: LocalMovieRepo, private val searchManager: SearchManager, private val updateManager: UpdateManager): ViewModel() {
+class LocalViewModel @Inject constructor (private val repo: LocalListRepo, private val searchManager: SearchManager, private val updateManager: UpdateManager): ViewModel() {
 
     fun fetchFavoriteMovies() = liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
         emit(Resource.Loading())

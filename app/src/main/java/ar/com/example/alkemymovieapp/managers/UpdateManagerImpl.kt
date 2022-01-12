@@ -1,10 +1,10 @@
 package ar.com.example.alkemymovieapp.managers
 
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
-import ar.com.example.alkemymovieapp.repository.MovieRepository
+import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepository
 import javax.inject.Inject
 
-class UpdateManagerImpl @Inject constructor(private val repo: MovieRepository): UpdateManager {
+class UpdateManagerImpl @Inject constructor(private val repo: LocalMovieRepository): UpdateManager {
     override suspend fun deleteFromFavorites(movieEntity: MovieEntity) {
         repo.updateMovie(movieEntity.also { it.isFavorite = false })
     }

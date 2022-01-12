@@ -4,7 +4,7 @@ import ar.com.example.alkemymovieapp.data.local.MovieDao
 import ar.com.example.alkemymovieapp.data.models.MovieEntity
 import javax.inject.Inject
 
-class LocalMovieRepoImpl @Inject constructor(private val movieDao: MovieDao) : LocalMovieRepo {
+class LocalListRepoImpl @Inject constructor(private val movieDao: MovieDao) : LocalListRepo {
 
     override suspend fun getFavoriteMovies(): List<MovieEntity> = movieDao.getAllFavorites()
 

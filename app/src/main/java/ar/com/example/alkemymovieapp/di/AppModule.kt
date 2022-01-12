@@ -3,13 +3,17 @@ package ar.com.example.alkemymovieapp.di
 import android.content.Context
 import androidx.room.Room
 import ar.com.example.alkemymovieapp.BuildConfig
-import ar.com.example.alkemymovieapp.core.WebService
 import ar.com.example.alkemymovieapp.data.local.AppDatabase
 import ar.com.example.alkemymovieapp.data.local.MovieDao
+import ar.com.example.alkemymovieapp.data.remote.WebService
 import ar.com.example.alkemymovieapp.repository.MovieTrailerRepository
 import ar.com.example.alkemymovieapp.repository.MovieTrailerRepositoryImpl
-import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepo
-import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepoImpl
+import ar.com.example.alkemymovieapp.repository.RemoteMovieRepository
+import ar.com.example.alkemymovieapp.repository.RemoteMovieRepositoryImpl
+import ar.com.example.alkemymovieapp.repository.local.LocalListRepo
+import ar.com.example.alkemymovieapp.repository.local.LocalListRepoImpl
+import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepository
+import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepositoryImpl
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -51,13 +55,23 @@ object AppModule {
     fun providesDao(db:AppDatabase) = db.movieDao()
 
     @Provides
-    fun providesLocalMovieRepoImpl(dao: MovieDao) : LocalMovieRepo {
-        return LocalMovieRepoImpl(dao)
+    fun providesLocalMovieRepoImpl(dao: MovieDao) : LocalListRepo {
+        return LocalListRepoImpl(dao)
     }
 
     @Provides
     fun providesMovieTrailerRepoImpl(webService: WebService): MovieTrailerRepository {
         return MovieTrailerRepositoryImpl(webService)
+    }
+
+    @Provides
+    fun providesRemoteDataSourceImpl(webService: WebService): RemoteMovieRepository {
+        return RemoteMovieRepositoryImpl(webService)
+    }
+
+    @Provides
+    fun providesLocalMovieDataSource(dao:MovieDao): LocalMovieRepository {
+        return LocalMovieRepositoryImpl(dao)
     }
 
 }

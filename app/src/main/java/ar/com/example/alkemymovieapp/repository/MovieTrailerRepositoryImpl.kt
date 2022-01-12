@@ -1,8 +1,8 @@
 package ar.com.example.alkemymovieapp.repository
 
 import ar.com.example.alkemymovieapp.application.AppConstants
-import ar.com.example.alkemymovieapp.core.WebService
 import ar.com.example.alkemymovieapp.data.models.MovieTrailerResponse
+import ar.com.example.alkemymovieapp.data.remote.WebService
 import javax.inject.Inject
 
 class MovieTrailerRepositoryImpl @Inject constructor(private val webService: WebService) : MovieTrailerRepository {

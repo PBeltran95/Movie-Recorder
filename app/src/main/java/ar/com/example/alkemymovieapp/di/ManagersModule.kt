@@ -1,7 +1,8 @@
 package ar.com.example.alkemymovieapp.di
 
 import ar.com.example.alkemymovieapp.managers.*
-import ar.com.example.alkemymovieapp.repository.MovieRepositoryImpl
+import ar.com.example.alkemymovieapp.repository.RemoteMovieRepository
+import ar.com.example.alkemymovieapp.repository.local.LocalMovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,12 +23,17 @@ object ManagersModule {
     }
 
     @Provides
-    fun providesUpdateManager(repo: MovieRepositoryImpl): UpdateManager {
+    fun providesDetailsCacheManager(localMovieRepository: LocalMovieRepository, remoteMovieRepository: RemoteMovieRepository): MovieDetailsCacheManager {
+        return MovieDetailsCacheManagerImpl(remoteMovieRepository, localMovieRepository)
+    }
+
+    @Provides
+    fun providesUpDateManager(repo: LocalMovieRepository): UpdateManager {
         return UpdateManagerImpl(repo)
     }
 
     @Provides
-    fun providesRegisterManager(repo: MovieRepositoryImpl): RegisterManager {
+    fun providesRegisterManager(repo: LocalMovieRepository): RegisterManager {
         return RegisterManagerImpl(repo)
     }
 
