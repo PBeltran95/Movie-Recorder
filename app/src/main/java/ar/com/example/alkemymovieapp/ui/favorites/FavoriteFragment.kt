@@ -39,8 +39,14 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentFavoriteBinding.bind(view)
+        setupRecyclerView()
         setupObservers()
         showError()
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvFavorites.adapter = adapter
+        setupSizes()
     }
 
     private fun showError() {
@@ -69,7 +75,8 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
                         addAll(movieList)
                     }
                     viewModel.verifyList(movieList)
-                    setupRecyclerView(movieList)
+                    manageAnimState(movieList)
+                    modifyData(movieList.toMutableList())
                 }
                 is Resource.Failure ->{
                     handleApiError(it)
@@ -92,17 +99,14 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite), MovieAdapter.OnCl
         }
     }
 
-    private fun setupRecyclerView(data: List<MovieEntity>) {
+    private fun manageAnimState(data: List<MovieEntity>) {
         with(binding){
             if (data.isNotEmpty()){
                 favoritesEmpty.isVisible = false
                 progressBar.isVisible = false
                 rvFavorites.isVisible = true
-                rvFavorites.adapter = adapter
             }
         }
-        adapter.setMovieData(data)
-        setupSizes()
     }
 
     private fun setupSizes() {

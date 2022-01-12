@@ -29,6 +29,7 @@ class WatchedFragment : Fragment(R.layout.fragment_watched), MovieAdapter.OnClic
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentWatchedBinding.bind(view)
+        setupRecyclerView()
         setupObservers()
         showError()
     }
@@ -45,16 +46,19 @@ class WatchedFragment : Fragment(R.layout.fragment_watched), MovieAdapter.OnClic
                 is Resource.Success ->{
                     val movieList = it.data
                     viewModel.verifyList(movieList)
-                    setupRecyclerView(movieList)
+                    sendDataToAdapter(movieList)
                 }
                 is Resource.Failure ->{}
             }
         }
     }
 
-    private fun setupRecyclerView(movieList: List<MovieEntity>) {
-        binding.rvFavorites.adapter = movieAdapter
+    private fun sendDataToAdapter(movieList: List<MovieEntity>) {
         movieAdapter.setMovieData(movieList)
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvFavorites.adapter = movieAdapter
         setupSizes()
     }
 

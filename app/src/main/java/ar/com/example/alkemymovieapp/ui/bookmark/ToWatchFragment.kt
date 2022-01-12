@@ -28,6 +28,7 @@ class ToWatchFragment : Fragment(R.layout.fragment_to_watch), MovieAdapter.OnCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentToWatchBinding.bind(view)
+        setupRecyclerView()
         setupObservers()
         showError()
     }
@@ -46,16 +47,19 @@ class ToWatchFragment : Fragment(R.layout.fragment_to_watch), MovieAdapter.OnCli
                 is Resource.Success ->{
                     val movieList = it.data
                     viewModel.verifyList(movieList)
-                    setupRecyclerView(movieList)
+                    sendDataToAdapter(movieList)
                 }
                 is Resource.Failure ->{}
             }
         }
     }
 
-    private fun setupRecyclerView(movieList: List<MovieEntity>) {
-        binding.rvToWatch.adapter = movieAdapter
+    private fun sendDataToAdapter(movieList: List<MovieEntity>) {
         movieAdapter.setMovieData(movieList)
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvToWatch.adapter = movieAdapter
         setupSizes()
     }
 

@@ -53,6 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         fetchMovies(page, movieFilter)
         drawEmptyListError()
         setupChips()
+        setupRecyclerView()
     }
 
     private fun setupPage() {
@@ -118,7 +119,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                         clear()
                         addAll(movieList)
                     }
-                    setupRecyclerView(commonListOfMovies)
+                    sendDataToAdapter(movieList)
                 }
                 is Resource.Failure -> {
                     binding.progressBar.isVisible = false
@@ -126,6 +127,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
                 }
             }
         }
+    }
+
+    private fun sendDataToAdapter(movieList: List<Movie>) {
+        myAdapter.setData(movieList.toMutableList())
     }
 
     override fun onMovieClick(movie: Movie) {
@@ -172,11 +177,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeAdapter.OnMovieClickL
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setupRecyclerView(movieList: MutableList<Movie>) {
+    private fun setupRecyclerView() {
         setupSizes()
         with(binding){
             rvHome.adapter = myAdapter
-            myAdapter.setData(movieList)
             rvHome.scheduleLayoutAnimation()
             rvHome.setHasFixedSize(true)
         }
